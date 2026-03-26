@@ -12,7 +12,7 @@
 <p align="center">
   <a href="https://pasty.dev"><img src="https://img.shields.io/badge/Website-pasty.dev-3B82F6?style=for-the-badge"></a>
   <a href="https://pasty.dev/#pricing"><img src="https://img.shields.io/badge/Purchase-Get_a_License-9333EA?style=for-the-badge"></a>
-  <a href="https://github.com/jordanhill/pasty/releases"><img src="https://img.shields.io/github/v/release/jordanhill/pasty?label=Download&style=for-the-badge&color=10B981"></a>
+  <a href="https://github.com/JordanH22/pasty/releases"><img src="https://img.shields.io/github/v/release/JordanH22/pasty?label=Download&style=for-the-badge&color=10B981"></a>
 </p>
 
 ---
@@ -29,7 +29,7 @@
 ## 🚀 Installation
 
 ### Option 1: Direct Download
-Download the latest `Pasty.dmg` directly from the [Releases Page](https://github.com/jordanhill/pasty/releases/latest).
+Download the latest `Pasty.dmg` directly from the [Releases Page](https://github.com/JordanH22/pasty/releases/latest).
 
 ### Option 2: Homebrew (Recommended)
 If you prefer Terminal administration, you can install Pasty using the official Homebrew Cask:
@@ -47,13 +47,13 @@ You can purchase a Lifetime License directly at [pasty.dev](https://pasty.dev).
 Encountered an issue or have an idea to make Pasty even better? 
 Please submit an issue here on GitHub!
 
-1. Check the [Issues Tab](https://github.com/jordanhill/pasty/issues) to ensure it hasn't been reported yet.
+1. Check the [Issues Tab](https://github.com/JordanH22/pasty/issues) to ensure it hasn't been reported yet.
 2. Explain the bug or feature request clearly.
 3. If it's a bug, please include your macOS version (requires 15.0+).
 
 ## 💬 Community
 
-Have questions? Want to share a cool workflow? Join the [GitHub Discussions](https://github.com/jordanhill/pasty/discussions) tab above.
+Have questions? Want to share a cool workflow? Join the [GitHub Discussions](https://github.com/JordanH22/pasty/discussions) tab above.
 
 <br>
 <p align="center">
