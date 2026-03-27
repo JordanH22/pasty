@@ -132,7 +132,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             forName: NSPopover.willShowNotification,
             object: popover,
             queue: .main
-        ) { [weak popover] _ in
+        ) { [weak popover, weak appState] _ in
+            appState?.isPopoverVisible = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 guard let popoverWindow = popover?.contentViewController?.view.window else { return }
                 popoverWindow.makeKey() // Ensure arrow keys work immediately
@@ -179,7 +180,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             forName: NSPopover.didCloseNotification,
             object: popover,
             queue: .main
-        ) { [weak self] _ in
+        ) { [weak self, weak appState] _ in
+            appState?.isPopoverVisible = false
             if let monitor = self?.popoverKeyMonitor {
                 NSEvent.removeMonitor(monitor)
                 self?.popoverKeyMonitor = nil

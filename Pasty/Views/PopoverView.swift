@@ -96,8 +96,22 @@ struct PopoverView: View {
                     }
                     .frame(width: 26, height: 28)
                     .onAppear {
-                        withAnimation(.linear(duration: 3.0).repeatForever(autoreverses: false)) {
-                            steamPhase = 1.0
+                        if appState.isPopoverVisible {
+                            withAnimation(.linear(duration: 3.0).repeatForever(autoreverses: false)) {
+                                steamPhase = 1.0
+                            }
+                        }
+                    }
+                    .onChange(of: appState.isPopoverVisible) { _, visible in
+                        if visible {
+                            steamPhase = 0.0
+                            withAnimation(.linear(duration: 3.0).repeatForever(autoreverses: false)) {
+                                steamPhase = 1.0
+                            }
+                        } else {
+                            withAnimation(.default) {
+                                steamPhase = 0.0
+                            }
                         }
                     }
                     

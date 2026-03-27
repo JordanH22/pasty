@@ -112,7 +112,7 @@ struct ClipboardPanelView: View {
                     .frame(width: 22, height: 22)
                     .scaleEffect(clipPulse ? 1.6 : 0.9)
                     .animation(
-                        .easeOut(duration: 2.5).repeatForever(autoreverses: false),
+                        clipPulse ? .easeOut(duration: 2.5).repeatForever(autoreverses: false) : .default,
                         value: clipPulse
                     )
                 
@@ -136,7 +136,10 @@ struct ClipboardPanelView: View {
             }
             .frame(width: 30, height: 30)
             .onAppear {
-                clipPulse = true
+                if state.appeared { clipPulse = true }
+            }
+            .onChange(of: state.appeared) { _, visible in
+                clipPulse = visible
             }
             
             Text("Clipboard")
