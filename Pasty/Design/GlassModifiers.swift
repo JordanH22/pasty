@@ -41,8 +41,6 @@ struct GlassCard: ViewModifier {
                     .fill(Color.white.opacity(isHovered ? 0.08 : 0.0))
             }
             .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-            .scaleEffect(isHovered ? 1.01 : 1.0)
-            .animation(Pasty.Motion.spring, value: isHovered)
     }
 }
 

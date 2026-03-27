@@ -167,7 +167,7 @@ struct ClipboardPanelView: View {
     private var itemList: some View {
         ScrollViewReader { proxy in
             ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 3) {
+                LazyVStack(spacing: 3) {
                     ForEach(Array(state.items.enumerated()), id: \.element.id) { index, item in
                         let isSelected = index == state.selectedIndex
                         let isExpanded = item.id == expandedId || pinnedIds.contains(item.id)
@@ -227,13 +227,15 @@ struct ClipboardPanelView: View {
                                 }
                             }
                         }
-                        // Staggered entrance
+                        // Staggered entrance (only first 8 visible rows animate; rest appear instantly)
                         .opacity(state.appeared ? 1 : 0)
-                        .offset(y: state.appeared ? 0 : 14)
-                        .scaleEffect(state.appeared ? 1 : 0.88)
+                        .offset(y: state.appeared ? 0 : (index < 8 ? 14 : 0))
+                        .scaleEffect(state.appeared ? 1 : (index < 8 ? 0.88 : 1))
                         .animation(
-                            .interactiveSpring(response: 0.5, dampingFraction: 0.68, blendDuration: 0.1)
-                            .delay(Double(index) * 0.035),
+                            index < 8
+                                ? .interactiveSpring(response: 0.5, dampingFraction: 0.68, blendDuration: 0.1)
+                                    .delay(Double(index) * 0.035)
+                                : .easeOut(duration: 0.15),
                             value: state.appeared
                         )
                     }
@@ -513,7 +515,6 @@ struct ClipboardPanelView: View {
         .contentShape(Rectangle())
         .glassCard(cornerRadius: 14, isHovered: isSelected)
         .animation(Pasty.Motion.spring, value: isSelected)
-        .animation(Pasty.Motion.spring, value: isExpanded)
     }
     
     // MARK: - Glass Refraction Line
