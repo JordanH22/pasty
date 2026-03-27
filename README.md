@@ -15,18 +15,44 @@
   <a href="https://github.com/JordanH22/pasty/releases"><img src="https://img.shields.io/github/v/release/JordanH22/pasty?label=Download&style=for-the-badge&color=10B981"></a>
 </p>
 
-
-
 ---
 
-> **Note:** This repository serves exclusively as the public issue tracker, community discussion forum, and binary distribution hub for Pasty. The application source code is private.
+<p align="center">
+  <img src="assets/screenshots/hotbar-codeview.png" alt="Pasty Hotkey Panel with Code View" width="780">
+</p>
 
 ## ✨ Features
 
 - **100% Native Swift** — Built from the absolute hardware level up using native macOS frameworks. Zero Electron. Zero Chromium. Unmatched battery efficiency.
 - **120Hz ProMotion Optimized** — Animations, scrolling, and menu drops are flawlessly tied to the display refresh rate.
-- **Extreme Privacy** — Pasty does not contain analytics or telemetry. Your clipboard history never leaves your hard drive. Everything is isolated locally in memory.
+- **Syntax Highlighting** — Auto-detects code snippets and renders them with full syntax highlighting across **30+ languages** — Swift, Python, JavaScript, Rust, Go, and more.
+- **Pin & Expand Previews** — Hover any paste to peek. Click to pin it open with fluid spring animations.
+- **Drag-to-Resize** — Grab any edge or corner to resize. Both panels remember your preferred size between sessions.
+- **Extreme Privacy** — Pasty does not contain analytics or telemetry. Your clipboard history never leaves your hard drive. Everything is AES-256 encrypted locally.
 - **Liquid Glass UI** — Deep desktop-level blur matrices, dynamic mesh backgrounds, and organic typography.
+
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td><img src="assets/screenshots/hotbar-codeview-2.png" alt="Hotkey Panel Code View" width="400"></td>
+    <td><img src="assets/screenshots/codeview-expanded.png" alt="Expanded Code Preview" width="400"></td>
+  </tr>
+  <tr>
+    <td align="center"><em>Code View with syntax highlighting</em></td>
+    <td align="center"><em>Expanded preview with line numbers</em></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/topbar-overview.png" alt="Menu Bar Popover" width="400"></td>
+    <td><img src="assets/screenshots/topbar-detail.png" alt="Menu Bar Detail" width="400"></td>
+  </tr>
+  <tr>
+    <td align="center"><em>Menu bar popover with full history</em></td>
+    <td align="center"><em>Clean search filtering</em></td>
+  </tr>
+</table>
+
+> **Note:** This repository serves exclusively as the public issue tracker, community discussion forum, and binary distribution hub for Pasty. The application source code is private.
 
 ## 🚀 Installation
 
@@ -59,5 +85,5 @@ Have questions? Want to share a cool workflow? Join the [GitHub Discussions](htt
 
 <br>
 <p align="center">
-  <i>Crafted for macOS</i>
+  <i>Crafted for macOS with ♥ by an indie developer</i>
 </p>
