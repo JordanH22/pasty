@@ -1,33 +1,32 @@
-# Xcode
+# Xcode / Swift
 .DS_Store
-.build/
+DerivedData/
 *.xcuserstate
 xcuserdata/
 *.xcscmblueprint
-DerivedData/
 *.hmap
 *.ipa
 *.dSYM.zip
 *.dSYM
 
-# Swift Package Manager
+# Build outputs (all names used by SPM/Xcode)
 .build/
+build_output/
+build/
+dist/
+
+# Swift Package Manager caches
 .swiftpm/xcode/xcshareddata/xcschemes/*.xcscheme_disabled
 Packages/
 
-# Dependency managers
-Podfile.lock
-Carthage/Build/
+# Built app bundle — don't commit compiled output
+Pasty.app/
+*.app/
 
-# macOS
-*.DS_Store
+# macOS junk
 .AppleDouble
 .LSOverride
-
-# Thumbnails
 ._*
-
-# Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
 .Spotlight-V100
@@ -36,10 +35,16 @@ Carthage/Build/
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
-# Built app bundle (don't commit the built output)
-Pasty.app/
+# Large binaries / temp files
+ffmpeg
+ffmpeg.zip
+*.dmg
+*.pdf
+pb_test.swift
+test_frame*.jpg
+dmg_background.png
 
-# Secrets / credentials
+# Personal / secrets
 *.p12
 *.mobileprovision
 Secrets.swift
