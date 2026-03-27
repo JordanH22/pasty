@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'Pasty' in project 'Pasty'
+➜ Explicit dependency on target 'Pasty_Pasty' in project 'Pasty'
+Target 'Pasty_Pasty' in project 'Pasty' (no dependencies)

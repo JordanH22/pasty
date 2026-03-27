@@ -1,0 +1,50 @@
+# Xcode
+.DS_Store
+.build/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/xcode/xcshareddata/xcschemes/*.xcscheme_disabled
+Packages/
+
+# Dependency managers
+Podfile.lock
+Carthage/Build/
+
+# macOS
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Built app bundle (don't commit the built output)
+Pasty.app/
+
+# Secrets / credentials
+*.p12
+*.mobileprovision
+Secrets.swift
+
+# IDE
+.idea/
+*.swp
+*~
