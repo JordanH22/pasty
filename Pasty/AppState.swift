@@ -69,9 +69,8 @@ final class AppState {
         didSet { Self.defaults.set(showUploadButton, forKey: "showUploadButton") }
     }
     
-    var secureHistory: Bool {
-        get { Self.defaults.bool(forKey: "secureHistory") }
-        set { Self.defaults.set(newValue, forKey: "secureHistory") }
+    var secureHistory: Bool = UserDefaults.standard.bool(forKey: "secureHistory") {
+        didSet { Self.defaults.set(secureHistory, forKey: "secureHistory") }
     }
     
     // MARK: - IDE Expanded View Settings
