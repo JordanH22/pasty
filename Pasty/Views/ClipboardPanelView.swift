@@ -374,6 +374,7 @@ struct ClipboardPanelView: View {
                     .transition(.scale.combined(with: .opacity))
                 }
             }
+            .frame(minHeight: 44)
             
             // Expanded preview card — slides in on hover/selection
             if isExpanded && (!item.content.isEmpty || item.isImage || item.fileURL != nil) {
