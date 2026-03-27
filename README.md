@@ -15,6 +15,12 @@
   <a href="https://github.com/JordanH22/pasty/releases"><img src="https://img.shields.io/github/v/release/JordanH22/pasty?label=Download&style=for-the-badge&color=10B981"></a>
 </p>
 
+<p align="center">
+  <video src="https://pasty.dev/assets/videos/hotkey_menu.mov" width="45%" autoplay loop muted playsinline></video>
+  &nbsp;&nbsp;&nbsp;
+  <video src="https://pasty.dev/assets/videos/top_menu.mov" width="45%" autoplay loop muted playsinline></video>
+</p>
+
 ---
 
 > **Note:** This repository serves exclusively as the public issue tracker, community discussion forum, and binary distribution hub for Pasty. The application source code is private.
