@@ -16,9 +16,9 @@
 </p>
 
 <p align="center">
-  <video src="https://pasty.dev/assets/videos/hotkey_menu.mov" width="45%" autoplay loop muted playsinline></video>
+  <video src="https://github.com/JordanH22/pasty/raw/main/assets/videos/hotkey_menu.mov" width="45%" autoplay loop muted playsinline></video>
   &nbsp;&nbsp;&nbsp;
-  <video src="https://pasty.dev/assets/videos/top_menu.mov" width="45%" autoplay loop muted playsinline></video>
+  <video src="https://github.com/JordanH22/pasty/raw/main/assets/videos/top_menu.mov" width="45%" autoplay loop muted playsinline></video>
 </p>
 
 ---
