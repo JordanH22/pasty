@@ -219,7 +219,7 @@ struct PasteRowView: View {
             else {
                 let content = paste.decryptedContent
                 let estimatedLines = content.filter { $0 == "\n" }.count + (content.count / 40)
-                let estimatedHeight = min(CGFloat(estimatedLines * 14 + 16), appState.popoverHeight * 0.45)
+                let estimatedHeight = max(60, min(CGFloat(estimatedLines * 14 + 16), appState.popoverHeight * 0.45))
                 
                 if appState.codeViewEnabled && CodeDetector.isCode(content) {
                     CodeEditorView(text: content, maxHeight: estimatedHeight)
