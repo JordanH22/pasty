@@ -449,12 +449,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     func windowWillClose(_ notification: Notification) {
         if let window = notification.object as? NSWindow, window == onboardingWindow {
-            // If they close the Activation UI without authenticating the software, forcefully murder the entire app process.
             if !LicenseManager.shared.isActivated {
+                // Closed without activating — terminate
                 NSApp.terminate(nil)
             } else {
-                // Return to stealth mode and yield global keyboard dominance back to the OS
+                // Activated — return to stealth mode
                 NSApp.setActivationPolicy(.accessory)
+                // Show onboarding for brand-new users who haven't seen it yet
+                if !hasCompletedOnboarding {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        self.showOnboarding()
+                    }
+                }
             }
         }
     }

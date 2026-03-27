@@ -195,8 +195,10 @@ struct ActivationView: View {
         do {
             let success = try await licenseManager.validateKey(licenseKey)
             if success {
-                // The LicenseManager will automatically set @Published isActivated to true,
-                // which our root App Delegate handles to close this window.
+                // isActivated is now true — close this window.
+                // windowWillClose in AppDelegate sees isActivated=true and sets
+                // activation policy to .accessory (no Terminate).
+                NSApp.keyWindow?.close()
             } else {
                 throw NSError(domain: "Invalid License", code: 401)
             }

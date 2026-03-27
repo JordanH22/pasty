@@ -94,14 +94,11 @@ final class LicenseManager: ObservableObject {
         
         if let decoded = try? JSONDecoder().decode(LemonSqueezyResponse.self, from: data) {
             if decoded.activated {
-                // Permanently embed valid key into Hardware Keychain
+                // Write to Keychain and update state synchronously
+                // (LicenseManager is @MainActor so this is safe to do directly)
                 self.writeToKeychain(key: cleanedKey)
-                
-                // Route UI updates onto the Main Thread safely
-                Task { @MainActor in
-                    self.serialKey = cleanedKey
-                    self.isActivated = true
-                }
+                self.serialKey = cleanedKey
+                self.isActivated = true
                 return true
             }
         }
