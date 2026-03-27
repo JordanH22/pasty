@@ -56,7 +56,7 @@ struct PasteRowView: View {
             
             // Content
             VStack(alignment: .leading, spacing: Pasty.Spacing.xs) {
-                Text(paste.decryptedContent.components(separatedBy: .newlines).first ?? paste.title)
+                Text(paste.title)
                     .font(Pasty.Typography.headline)
                     .foregroundStyle(.primary)
                     .lineLimit(2)
@@ -218,7 +218,7 @@ struct PasteRowView: View {
             } 
             else {
                 let content = paste.decryptedContent
-                let estimatedLines = content.components(separatedBy: .newlines).count + (content.count / 40)
+                let estimatedLines = content.filter { $0 == "\n" }.count + (content.count / 40)
                 let estimatedHeight = min(CGFloat(estimatedLines * 14 + 16), appState.popoverHeight * 0.45)
                 
                 if appState.codeViewEnabled && CodeDetector.isCode(content) {

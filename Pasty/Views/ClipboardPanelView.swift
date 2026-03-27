@@ -456,10 +456,10 @@ struct ClipboardPanelView: View {
                     } 
                     else {
                         let content = item.content
-                        let estimatedLines = content.components(separatedBy: .newlines).count + (content.count / 40)
+                        let estimatedLines = content.filter { $0 == "\n" }.count + (content.count / 40)
                         let estimatedHeight = min(CGFloat(estimatedLines * 14 + 16), appState.hotkeyMenuHeight * 0.45)
                         
-                        if appState.codeViewEnabled && CodeDetector.isCode(content) {
+                        if appState.codeViewEnabled && item.isCode {
                             CodeEditorView(text: content, maxHeight: estimatedHeight)
                         } else {
                             ScrollView(.vertical, showsIndicators: true) {

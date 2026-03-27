@@ -43,22 +43,25 @@ final class ClipboardHistory: @unchecked Sendable {
         let isImage: Bool
         let binaryData: Data?
         let fileURL: String?
+        let shortPreview: String
+        let isCode: Bool
         
-        var preview: String {
+        init(content: String, timestamp: Date, isImage: Bool, binaryData: Data?, fileURL: String?) {
+            self.content = content
+            self.timestamp = timestamp
+            self.isImage = isImage
+            self.binaryData = binaryData
+            self.fileURL = fileURL
+            
+            self.isCode = CodeDetector.isCode(content)
+            
             let trimmed = content.trimmingCharacters(in: .whitespacesAndNewlines)
-            if trimmed.count > 120 {
-                return String(trimmed.prefix(120)) + "…"
+            if let firstNewlineIndex = trimmed.firstIndex(of: "\n") {
+                let firstLine = String(trimmed[..<firstNewlineIndex])
+                self.shortPreview = firstLine.count > 200 ? String(firstLine.prefix(200)) + "…" : firstLine
+            } else {
+                self.shortPreview = trimmed.count > 200 ? String(trimmed.prefix(200)) + "…" : trimmed
             }
-            return trimmed
-        }
-        
-        var shortPreview: String {
-            let trimmed = content.trimmingCharacters(in: .whitespacesAndNewlines)
-            let firstLine = trimmed.components(separatedBy: .newlines).first ?? trimmed
-            if firstLine.count > 200 {
-                return String(firstLine.prefix(200)) + "…"
-            }
-            return firstLine
         }
     }
     
