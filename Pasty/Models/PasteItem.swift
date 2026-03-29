@@ -13,6 +13,8 @@ final class PasteItem {
     var isPlainText: Bool
     var isQueued: Bool
     var isEncrypted: Bool
+    /// True for placeholder recordings still being saved by macOS
+    var isPending: Bool = false
     
     // Media Support
     var mediaType: String = "text" // "text", "image", "file"
@@ -40,6 +42,7 @@ final class PasteItem {
         self.isPlainText = isPlainText
         self.isQueued = false
         self.isEncrypted = false
+        self.isPending = false
         self.mediaType = mediaType
         self.binaryData = binaryData
         self.fileURLString = fileURLString
@@ -69,10 +72,14 @@ final class PasteItem {
         return Date() > expiresAt
     }
     
+    nonisolated(unsafe) private static let relativeFormatter: RelativeDateTimeFormatter = {
+        let f = RelativeDateTimeFormatter()
+        f.unitsStyle = .abbreviated
+        return f
+    }()
+    
     var timeAgo: String {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .abbreviated
-        return formatter.localizedString(for: createdAt, relativeTo: Date())
+        Self.relativeFormatter.localizedString(for: createdAt, relativeTo: Date())
     }
     
     var statusSymbol: String {

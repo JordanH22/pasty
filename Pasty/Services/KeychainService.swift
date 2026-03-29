@@ -15,50 +15,14 @@ final class KeychainService: @unchecked Sendable {
     @discardableResult
     func save(_ value: String, forKey key: String) -> Bool {
         guard let data = value.data(using: .utf8) else { return false }
-        
-        // Delete existing item first
-        delete(forKey: key)
-        
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: serviceName,
-            kSecAttrAccount as String: key,
-            kSecValueData as String: data,
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
-        ]
-        
-        let status = SecItemAdd(query as CFDictionary, nil)
-        
-        if status == errSecSuccess {
-            logger.info("Keychain: saved value for key '\(key)'")
-            return true
-        } else {
-            logger.error("Keychain: failed to save key '\(key)' — status \(status)")
-            return false
-        }
+        return saveData(data, forKey: key)
     }
     
     // MARK: - Retrieve
     
     func retrieve(forKey key: String) -> String? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: serviceName,
-            kSecAttrAccount as String: key,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
-        
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
-        
-        guard status == errSecSuccess,
-              let data = result as? Data,
-              let string = String(data: data, encoding: .utf8) else {
-            return nil
-        }
-        
-        return string
+        guard let data = retrieveData(forKey: key) else { return nil }
+        return String(data: data, encoding: .utf8)
     }
     
     // MARK: - Delete
@@ -90,6 +54,9 @@ final class KeychainService: @unchecked Sendable {
         ]
         
         let status = SecItemAdd(query as CFDictionary, nil)
+        if status != errSecSuccess {
+            logger.error("Keychain save failed for '\(key)' — status \(status)")
+        }
         return status == errSecSuccess
     }
     

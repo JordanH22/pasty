@@ -210,6 +210,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         ClipboardHistory.shared.modelContext = modelContainer.mainContext
         ClipboardHistory.shared.maxItems = appState.historyLimit
         ClipboardHistory.shared.startMonitoring()
+        ScreenshotMonitor.shared.startMonitoring()
         
         // Update network status
         appState.isOnline = PasteService.shared.isOnline
@@ -444,6 +445,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         ClipboardHistory.shared.stopMonitoring()
+        ScreenshotMonitor.shared.stopMonitoring()
         HotkeyManager.shared.unregister()
     }
     

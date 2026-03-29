@@ -162,6 +162,27 @@ struct SettingsView: View {
                 .pickerStyle(.segmented)
                 .frame(width: 180)
             }
+            
+            Divider().opacity(0.15)
+            
+            // Screenshot auto-capture info
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "camera.viewfinder")
+                    .foregroundStyle(.blue)
+                    .font(.system(size: 13))
+                    .padding(.top, 1)
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Screenshot auto-capture")
+                        .font(Pasty.Typography.body)
+                        .fontWeight(.medium)
+                    
+                    Text("Screenshots are automatically added to your Pasty history when they're saved. No extra permissions required.")
+                        .font(Pasty.Typography.caption)
+                        .foregroundStyle(.tertiary)
+                        .lineSpacing(2)
+                }
+            }
         }
         .font(Pasty.Typography.body)
     }

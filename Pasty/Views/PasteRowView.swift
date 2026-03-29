@@ -9,6 +9,7 @@ struct PasteRowView: View {
     var isPinned: Bool = false
     var onCollapse: (() -> Void)? = nil
     @State private var isPlayingVideo = false
+    @State private var cachedIsCode: Bool?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -37,11 +38,12 @@ struct PasteRowView: View {
                     }
                 }
                 .transition(.asymmetric(
-                    insertion: .opacity.combined(with: .move(edge: .top)).combined(with: .scale(scale: 0.96)),
+                    insertion: .opacity.combined(with: .scale(scale: 0.98, anchor: .top)),
                     removal: .opacity
                 ))
             }
         }
+        .clipped()
         .padding(Pasty.Spacing.md)
         .glassCard(cornerRadius: Pasty.Radius.md, isHovered: isHovered)
         .animation(Pasty.Motion.spring, value: isHovered)
@@ -109,6 +111,36 @@ struct PasteRowView: View {
             
             Spacer()
             
+            // Action buttons for images/screenshots (visible on hover)
+            if isHovered, paste.mediaType == "image", let data = paste.binaryData {
+                HStack(spacing: 4) {
+                    Button {
+                        openInMarkup(imageData: data)
+                    } label: {
+                        Image(systemName: "pencil.tip.crop.circle")
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundStyle(.secondary)
+                            .frame(width: 24, height: 24)
+                            .background(Color.white.opacity(0.08), in: Circle())
+                    }
+                    .buttonStyle(.plain)
+                    .help("Markup")
+                    
+                    Button {
+                        shareImage(data: data)
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(.secondary)
+                            .frame(width: 24, height: 24)
+                            .background(Color.white.opacity(0.08), in: Circle())
+                    }
+                    .buttonStyle(.plain)
+                    .help("Share")
+                }
+                .transition(.opacity.combined(with: .scale(scale: 0.8)))
+            }
+            
             // Copy feedback
             if isCopied {
                 Image(systemName: "checkmark.circle.fill")
@@ -143,11 +175,50 @@ struct PasteRowView: View {
             Divider().opacity(0.15)
             
             if paste.mediaType == "image", let data = paste.binaryData, let nsImage = NSImage(data: data) {
-                Image(nsImage: nsImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: 250)
-                    .clipShape(RoundedRectangle(cornerRadius: Pasty.Radius.sm))
+                VStack(spacing: Pasty.Spacing.sm) {
+                    Image(nsImage: nsImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: 250)
+                        .clipShape(RoundedRectangle(cornerRadius: Pasty.Radius.sm))
+                    
+                    // Action buttons — Edit & Share
+                    HStack(spacing: Pasty.Spacing.sm) {
+                        // Markup / Edit button
+                        Button {
+                            openInMarkup(imageData: data)
+                        } label: {
+                            Label("Markup", systemImage: "pencil.tip.crop.circle")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundStyle(.primary)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(Color.white.opacity(0.08), in: Capsule())
+                        }
+                        .buttonStyle(.plain)
+                        .onHover { h in
+                            if h { NSCursor.pointingHand.push() } else { NSCursor.pop() }
+                        }
+                        
+                        // Share button
+                        Button {
+                            shareImage(data: data)
+                        } label: {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundStyle(.primary)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(Color.white.opacity(0.08), in: Capsule())
+                        }
+                        .buttonStyle(.plain)
+                        .onHover { h in
+                            if h { NSCursor.pointingHand.push() } else { NSCursor.pop() }
+                        }
+                        
+                        Spacer()
+                    }
+                }
             } 
             else if paste.mediaType == "file", let fileURLStr = paste.fileURLString {
                 let url = URL(string: fileURLStr) ?? URL(fileURLWithPath: fileURLStr)
@@ -212,6 +283,41 @@ struct PasteRowView: View {
                         }
                         Spacer()
                     }
+                    
+                    // Open & Share actions for files
+                    HStack(spacing: Pasty.Spacing.sm) {
+                        Button {
+                            NSWorkspace.shared.open(url)
+                        } label: {
+                            Label("Open", systemImage: "arrow.up.forward.square")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundStyle(.primary)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(Color.white.opacity(0.08), in: Capsule())
+                        }
+                        .buttonStyle(.plain)
+                        .onHover { h in
+                            if h { NSCursor.pointingHand.push() } else { NSCursor.pop() }
+                        }
+                        
+                        Button {
+                            shareFile(url: url)
+                        } label: {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundStyle(.primary)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(Color.white.opacity(0.08), in: Capsule())
+                        }
+                        .buttonStyle(.plain)
+                        .onHover { h in
+                            if h { NSCursor.pointingHand.push() } else { NSCursor.pop() }
+                        }
+                        
+                        Spacer()
+                    }
                 }
                 .padding(12)
                 .background(Color.white.opacity(0.05), in: RoundedRectangle(cornerRadius: Pasty.Radius.sm, style: .continuous))
@@ -221,7 +327,13 @@ struct PasteRowView: View {
                 let estimatedLines = content.filter { $0 == "\n" }.count + (content.count / 40)
                 let estimatedHeight = max(60, min(CGFloat(estimatedLines * 14 + 16), appState.popoverHeight * 0.45))
                 
-                if appState.codeViewEnabled && CodeDetector.isCode(content) {
+                let isCode = cachedIsCode ?? {
+                    let result = CodeDetector.isCode(content)
+                    DispatchQueue.main.async { cachedIsCode = result }
+                    return result
+                }()
+                
+                if appState.codeViewEnabled && isCode {
                     CodeEditorView(text: content, maxHeight: estimatedHeight)
                 } else {
                     // Plain text
@@ -257,6 +369,51 @@ struct PasteRowView: View {
             }
         }
         .padding(.top, Pasty.Spacing.sm)
+    }
+    
+    // MARK: - Actions
+    
+    /// Opens the image in Preview.app for Markup editing
+    private func openInMarkup(imageData: Data) {
+        let tempDir = FileManager.default.temporaryDirectory
+        let filename = "Pasty_Screenshot_\(Int(Date().timeIntervalSince1970)).png"
+        let fileURL = tempDir.appendingPathComponent(filename)
+        
+        // Convert to PNG if needed
+        if let image = NSImage(data: imageData),
+           let tiff = image.tiffRepresentation,
+           let bitmap = NSBitmapImageRep(data: tiff),
+           let pngData = bitmap.representation(using: .png, properties: [:]) {
+            try? pngData.write(to: fileURL)
+        } else {
+            try? imageData.write(to: fileURL)
+        }
+        
+        NSWorkspace.shared.open(fileURL)
+    }
+    
+    /// Shows the native macOS share sheet for the image
+    private func shareImage(data: Data) {
+        guard let image = NSImage(data: data) else { return }
+        
+        let picker = NSSharingServicePicker(items: [image])
+        
+        // Find the key window's content view to anchor the picker
+        if let window = NSApp.keyWindow ?? NSApp.windows.first(where: { $0.isVisible }),
+           let contentView = window.contentView {
+            let rect = CGRect(x: contentView.bounds.midX, y: contentView.bounds.midY, width: 1, height: 1)
+            picker.show(relativeTo: rect, of: contentView, preferredEdge: .minY)
+        }
+    }
+    
+    private func shareFile(url: URL) {
+        let picker = NSSharingServicePicker(items: [url])
+        
+        if let window = NSApp.keyWindow ?? NSApp.windows.first(where: { $0.isVisible }),
+           let contentView = window.contentView {
+            let rect = CGRect(x: contentView.bounds.midX, y: contentView.bounds.midY, width: 1, height: 1)
+            picker.show(relativeTo: rect, of: contentView, preferredEdge: .minY)
+        }
     }
 }
 

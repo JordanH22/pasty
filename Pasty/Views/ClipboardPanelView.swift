@@ -382,12 +382,45 @@ struct ClipboardPanelView: View {
                     Divider().opacity(0.1)
                     
                     if item.isImage, let data = item.binaryData, let nsImage = NSImage(data: data) {
-                        Image(nsImage: nsImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxHeight: 200)
-                            .clipShape(RoundedRectangle(cornerRadius: 6))
-                            .padding(.top, 4)
+                        VStack(spacing: 6) {
+                            Image(nsImage: nsImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxHeight: 200)
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                            
+                            // Markup & Share actions
+                            HStack(spacing: 6) {
+                                Button {
+                                    openInMarkup(imageData: data)
+                                } label: {
+                                    Label("Markup", systemImage: "pencil.tip.crop.circle")
+                                        .font(.system(size: 10, weight: .medium))
+                                        .foregroundStyle(.primary.opacity(0.6))
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .background(.ultraThinMaterial, in: Capsule())
+                                        .overlay(Capsule().strokeBorder(Color.white.opacity(0.1), lineWidth: 0.5))
+                                }
+                                .buttonStyle(.plain)
+                                
+                                Button {
+                                    shareImage(data: data)
+                                } label: {
+                                    Label("Share", systemImage: "square.and.arrow.up")
+                                        .font(.system(size: 10, weight: .medium))
+                                        .foregroundStyle(.primary.opacity(0.6))
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .background(.ultraThinMaterial, in: Capsule())
+                                        .overlay(Capsule().strokeBorder(Color.white.opacity(0.1), lineWidth: 0.5))
+                                }
+                                .buttonStyle(.plain)
+                                
+                                Spacer()
+                            }
+                        }
+                        .padding(.top, 4)
                     } 
                     else if let fileURLStr = item.fileURL {
                         let url = URL(string: fileURLStr) ?? URL(fileURLWithPath: fileURLStr)
@@ -452,6 +485,37 @@ struct ClipboardPanelView: View {
                                 }
                                 Spacer()
                             }
+                            
+                            // Markup & Share actions for files
+                            HStack(spacing: 6) {
+                                Button {
+                                    openFileInApp(url: url)
+                                } label: {
+                                    Label("Open", systemImage: "arrow.up.forward.square")
+                                        .font(.system(size: 10, weight: .medium))
+                                        .foregroundStyle(.primary.opacity(0.6))
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .background(.ultraThinMaterial, in: Capsule())
+                                        .overlay(Capsule().strokeBorder(Color.white.opacity(0.1), lineWidth: 0.5))
+                                }
+                                .buttonStyle(.plain)
+                                
+                                Button {
+                                    shareFile(url: url)
+                                } label: {
+                                    Label("Share", systemImage: "square.and.arrow.up")
+                                        .font(.system(size: 10, weight: .medium))
+                                        .foregroundStyle(.primary.opacity(0.6))
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .background(.ultraThinMaterial, in: Capsule())
+                                        .overlay(Capsule().strokeBorder(Color.white.opacity(0.1), lineWidth: 0.5))
+                                }
+                                .buttonStyle(.plain)
+                                
+                                Spacer()
+                            }
                         }
                         .padding(8)
                         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
@@ -506,7 +570,7 @@ struct ClipboardPanelView: View {
                     }
                 }
                 .transition(.asymmetric(
-                    insertion: .opacity.combined(with: .move(edge: .top)).combined(with: .scale(scale: 0.96)),
+                    insertion: .opacity.combined(with: .scale(scale: 0.98, anchor: .top)),
                     removal: .opacity
                 ))
             }
@@ -585,6 +649,51 @@ struct ClipboardPanelView: View {
         .opacity(state.appeared ? 1 : 0)
         .scaleEffect(state.appeared ? 1 : 0.8)
         .animation(.interactiveSpring(response: 0.5, dampingFraction: 0.7).delay(0.1), value: state.appeared)
+    }
+    
+    // MARK: - Actions
+    
+    private func openInMarkup(imageData: Data) {
+        let tempDir = FileManager.default.temporaryDirectory
+        let filename = "Pasty_Screenshot_\(Int(Date().timeIntervalSince1970)).png"
+        let fileURL = tempDir.appendingPathComponent(filename)
+        
+        if let image = NSImage(data: imageData),
+           let tiff = image.tiffRepresentation,
+           let bitmap = NSBitmapImageRep(data: tiff),
+           let pngData = bitmap.representation(using: .png, properties: [:]) {
+            try? pngData.write(to: fileURL)
+        } else {
+            try? imageData.write(to: fileURL)
+        }
+        
+        NSWorkspace.shared.open(fileURL)
+    }
+    
+    private func shareImage(data: Data) {
+        guard let image = NSImage(data: data) else { return }
+        
+        let picker = NSSharingServicePicker(items: [image])
+        
+        if let window = NSApp.keyWindow ?? NSApp.windows.first(where: { $0.isVisible }),
+           let contentView = window.contentView {
+            let rect = CGRect(x: contentView.bounds.midX, y: contentView.bounds.midY, width: 1, height: 1)
+            picker.show(relativeTo: rect, of: contentView, preferredEdge: .minY)
+        }
+    }
+    
+    private func openFileInApp(url: URL) {
+        NSWorkspace.shared.open(url)
+    }
+    
+    private func shareFile(url: URL) {
+        let picker = NSSharingServicePicker(items: [url])
+        
+        if let window = NSApp.keyWindow ?? NSApp.windows.first(where: { $0.isVisible }),
+           let contentView = window.contentView {
+            let rect = CGRect(x: contentView.bounds.midX, y: contentView.bounds.midY, width: 1, height: 1)
+            picker.show(relativeTo: rect, of: contentView, preferredEdge: .minY)
+        }
     }
     
 }

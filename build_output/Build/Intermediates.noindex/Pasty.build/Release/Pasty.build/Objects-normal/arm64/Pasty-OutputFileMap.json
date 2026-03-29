@@ -68,6 +68,11 @@
     "llvm-bc" : "/Users/jordanhill/Desktop/Pastry/build_output/Build/Intermediates.noindex/Pasty.build/Release/Pasty.build/Objects-normal/arm64/PasteService.bc",
     "object" : "/Users/jordanhill/Desktop/Pastry/build_output/Build/Intermediates.noindex/Pasty.build/Release/Pasty.build/Objects-normal/arm64/PasteService.o"
   },
+  "/Users/jordanhill/Desktop/Pastry/Pasty/Services/ScreenshotMonitor.swift" : {
+    "index-unit-output-path" : "/Pasty.build/Release/Pasty.build/Objects-normal/arm64/ScreenshotMonitor.o",
+    "llvm-bc" : "/Users/jordanhill/Desktop/Pastry/build_output/Build/Intermediates.noindex/Pasty.build/Release/Pasty.build/Objects-normal/arm64/ScreenshotMonitor.bc",
+    "object" : "/Users/jordanhill/Desktop/Pastry/build_output/Build/Intermediates.noindex/Pasty.build/Release/Pasty.build/Objects-normal/arm64/ScreenshotMonitor.o"
+  },
   "/Users/jordanhill/Desktop/Pastry/Pasty/Services/SyntaxHighlighter.swift" : {
     "index-unit-output-path" : "/Pasty.build/Release/Pasty.build/Objects-normal/arm64/SyntaxHighlighter.o",
     "llvm-bc" : "/Users/jordanhill/Desktop/Pastry/build_output/Build/Intermediates.noindex/Pasty.build/Release/Pasty.build/Objects-normal/arm64/SyntaxHighlighter.bc",

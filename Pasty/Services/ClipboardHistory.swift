@@ -5,16 +5,29 @@ import SwiftData
 import os.log
 
 extension NSImage {
-    /// Deep-levels the NSImage geometry bounds to a strict max constraint to physically gate RAM decompression buffers
+    /// Resize image to fit within maxWidth using CGContext (faster than lockFocus)
     func resizedToFit(maxWidth: CGFloat) -> NSImage {
         guard self.size.width > maxWidth else { return self }
         let scale = maxWidth / self.size.width
-        let newSize = NSSize(width: maxWidth, height: self.size.height * scale)
-        let newImage = NSImage(size: newSize)
-        newImage.lockFocus()
-        self.draw(in: NSRect(origin: .zero, size: newSize), from: NSRect(origin: .zero, size: self.size), operation: .copy, fraction: 1.0)
-        newImage.unlockFocus()
-        return newImage
+        let newWidth = Int(maxWidth)
+        let newHeight = Int(self.size.height * scale)
+        
+        guard let cgImage = self.cgImage(forProposedRect: nil, context: nil, hints: nil),
+              let ctx = CGContext(
+                data: nil,
+                width: newWidth,
+                height: newHeight,
+                bitsPerComponent: 8,
+                bytesPerRow: 0,
+                space: CGColorSpaceCreateDeviceRGB(),
+                bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
+              ) else { return self }
+        
+        ctx.interpolationQuality = .high
+        ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        
+        guard let resized = ctx.makeImage() else { return self }
+        return NSImage(cgImage: resized, size: NSSize(width: newWidth, height: newHeight))
     }
 }
 
@@ -25,6 +38,8 @@ final class ClipboardHistory: @unchecked Sendable {
     private let logger = Logger(subsystem: "com.pasty.app", category: "clipboard-history")
     private var timer: Timer?
     private var lastChangeCount: Int
+    /// Tracks changeCount when Pasty itself pastes, so the monitor skips re-capturing it
+    private var selfPasteChangeCount: Int = -1
     
     private(set) var items: [ClipboardEntry] = []
     var maxItems: Int = 50
@@ -37,21 +52,25 @@ final class ClipboardHistory: @unchecked Sendable {
     }
     
     struct ClipboardEntry: Identifiable, Equatable {
-        let id = UUID()
+        let id: UUID
         let content: String
         let timestamp: Date
         let isImage: Bool
-        let binaryData: Data?
-        let fileURL: String?
+        var binaryData: Data?
+        var fileURL: String?
         let shortPreview: String
         let isCode: Bool
+        /// True for placeholder recordings that are still being saved by macOS
+        var isPending: Bool
         
-        init(content: String, timestamp: Date, isImage: Bool, binaryData: Data?, fileURL: String?) {
-            self.content = content
+        init(content: String, timestamp: Date, isImage: Bool, binaryData: Data?, fileURL: String?, id: UUID = UUID(), isPending: Bool = false) {
+            self.id = id
+            self.content = String(content.prefix(5000)) // Cap in-memory; full text in SwiftData
             self.timestamp = timestamp
             self.isImage = isImage
             self.binaryData = binaryData
             self.fileURL = fileURL
+            self.isPending = isPending
             
             self.isCode = CodeDetector.isCode(content)
             
@@ -73,18 +92,20 @@ final class ClipboardHistory: @unchecked Sendable {
         guard let ctx = modelContext else { return }
         
         do {
-            let descriptor = FetchDescriptor<PasteItem>(
+            var descriptor = FetchDescriptor<PasteItem>(
                 sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
             )
+            descriptor.fetchLimit = maxItems
             let savedItems = try ctx.fetch(descriptor)
             
-            // Map the SwiftData models back into the fast in-memory array used by the Hotkey Menu
-            items = savedItems.prefix(maxItems).map { item in
+            // Map SwiftData models into the fast in-memory array used by the Hotkey Menu
+            // Load binaryData for first 10 items (visible in hotkey panel), skip rest to save RAM
+            items = savedItems.enumerated().map { index, item in
                 ClipboardEntry(
                     content: item.decryptedContent,
                     timestamp: item.createdAt,
                     isImage: item.mediaType == "image",
-                    binaryData: item.binaryData,
+                    binaryData: index < 10 ? item.binaryData : nil,
                     fileURL: item.fileURLString
                 )
             }
@@ -96,7 +117,7 @@ final class ClipboardHistory: @unchecked Sendable {
     }
     
     func startMonitoring() {
-        let t = Timer(timeInterval: 0.5, repeats: true) { [weak self] _ in
+        let t = Timer(timeInterval: 0.75, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             let currentCount = NSPasteboard.general.changeCount
             guard currentCount != self.lastChangeCount else { return }
@@ -117,104 +138,140 @@ final class ClipboardHistory: @unchecked Sendable {
     
     // Background thread processing to avoid blocking 120Hz SwiftUI frames
     private func processClipboardChange(newCount: Int) {
-        let pb = NSPasteboard.general
-        
-        var ExtractedContent = ""
-        var ExtractedMediaType = "text"
-        var ExtractedBinaryData: Data? = nil
-        var ExtractedFileURL: String? = nil
-        
-        // 1. Check for File URLs — use direct type reading to avoid sandbox extension errors
-        let fileURL: URL? = {
-            // Try legacy NSFilenamesPboardType first (Finder uses this)
-            if let filenames = pb.propertyList(forType: NSPasteboard.PasteboardType("NSFilenamesPboardType")) as? [String],
-               let firstPath = filenames.first {
-                return URL(fileURLWithPath: firstPath)
-            }
-            // Try modern public.file-url
-            if let urlStr = pb.string(forType: .fileURL), let url = URL(string: urlStr) {
-                return url
-            }
-            return nil
-        }()
-        
-        if let firstURL = fileURL {
-            let pathExt = firstURL.pathExtension.lowercased()
-            let imageExtensions = ["png", "jpg", "jpeg", "tiff", "gif", "heic", "webp"]
-            let videoExtensions = ["mov", "mp4", "m4v", "avi", "mkv", "webm", "mpeg", "mpg"]
+        // Read pasteboard on main thread to avoid crashes
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let pb = NSPasteboard.general
             
-            if imageExtensions.contains(pathExt),
-               let rawImg = NSImage(contentsOf: firstURL) {
+            var ExtractedContent = ""
+            var ExtractedMediaType = "text"
+            var ExtractedBinaryData: Data? = nil
+            var ExtractedFileURL: String? = nil
+            
+            // 1. Check for File URLs — use safe string-based reading
+            let fileURL: URL? = {
+                if let urlStr = pb.string(forType: .fileURL), let url = URL(string: urlStr) {
+                    return url
+                }
+                if let filenames = pb.propertyList(forType: NSPasteboard.PasteboardType("NSFilenamesPboardType")) as? [String],
+                   let firstPath = filenames.first {
+                    return URL(fileURLWithPath: firstPath)
+                }
+                return nil
+            }()
+            
+            if let firstURL = fileURL {
+                let pathExt = firstURL.pathExtension.lowercased()
+                let imageExtensions = ["png", "jpg", "jpeg", "tiff", "gif", "heic", "webp"]
+                let videoExtensions = ["mov", "mp4", "m4v", "avi", "mkv", "webm", "mpeg", "mpg"]
                 
-                let img = rawImg.resizedToFit(maxWidth: 800)
-                if let tiff = img.tiffRepresentation,
-                   let bitmap = NSBitmapImageRep(data: tiff),
-                   let jpegData = bitmap.representation(using: .jpeg, properties: [.compressionFactor: 0.8]) {
+                // Skip screen recordings — ScreenshotMonitor handles these via Desktop polling
+                if ScreenshotMonitor.isRecordingFile(firstURL.lastPathComponent) {
+                    return
+                }
+                
+                if imageExtensions.contains(pathExt),
+                   let rawImg = NSImage(contentsOf: firstURL) {
                     
+                    let img = rawImg.resizedToFit(maxWidth: 400)
+                    if let tiff = img.tiffRepresentation,
+                       let bitmap = NSBitmapImageRep(data: tiff),
+                       let jpegData = bitmap.representation(using: .jpeg, properties: [.compressionFactor: 0.6]) {
+                        
+                        ExtractedContent = firstURL.lastPathComponent
+                        ExtractedMediaType = "image"
+                        ExtractedBinaryData = jpegData
+                        ExtractedFileURL = firstURL.absoluteString
+                    } else {
+                        ExtractedContent = firstURL.lastPathComponent
+                        ExtractedMediaType = "file"
+                        ExtractedFileURL = firstURL.absoluteString
+                    }
+                } else if videoExtensions.contains(pathExt) {
                     ExtractedContent = firstURL.lastPathComponent
-                    ExtractedMediaType = "image"
-                    ExtractedBinaryData = jpegData
+                    ExtractedMediaType = "file"
                     ExtractedFileURL = firstURL.absoluteString
+                    
+                    if let thumbData = Self.generateVideoThumbnail(url: firstURL) {
+                        ExtractedBinaryData = thumbData
+                    }
+                    
+                    // Cache video file for inline playback (sandbox access expires after capture)
+                    Self.cacheVideoFile(from: firstURL)
                 } else {
                     ExtractedContent = firstURL.lastPathComponent
                     ExtractedMediaType = "file"
                     ExtractedFileURL = firstURL.absoluteString
                 }
-            } else if videoExtensions.contains(pathExt) {
-                ExtractedContent = firstURL.lastPathComponent
-                ExtractedMediaType = "file"
-                ExtractedFileURL = firstURL.absoluteString
+            } 
+            // 2. Check for pure Image Data (Screenshots, copied web images)
+            // Use safe data-based reading instead of NSImage(pasteboard:)
+            else if let tiffData = pb.data(forType: .tiff) {
+                guard let rawImg = NSImage(data: tiffData) else { return }
                 
-                if let thumbData = Self.generateVideoThumbnail(url: firstURL) {
-                    ExtractedBinaryData = thumbData
+                let img = rawImg.resizedToFit(maxWidth: 400)
+                var jpegData: Data? = nil
+                
+                if let tiff = img.tiffRepresentation, let bitmap = NSBitmapImageRep(data: tiff) {
+                    jpegData = bitmap.representation(using: .jpeg, properties: [.compressionFactor: 0.6])
+                } 
+                
+                if jpegData == nil {
+                    var rect = NSRect(origin: .zero, size: img.size)
+                    if let cgImage = img.cgImage(forProposedRect: &rect, context: nil, hints: nil) {
+                        let newRep = NSBitmapImageRep(cgImage: cgImage)
+                        jpegData = newRep.representation(using: .jpeg, properties: [.compressionFactor: 0.6])
+                    }
                 }
                 
-                // Cache video file for inline playback (sandbox access expires after capture)
-                Self.cacheVideoFile(from: firstURL)
-            } else {
-                ExtractedContent = firstURL.lastPathComponent
-                ExtractedMediaType = "file"
-                ExtractedFileURL = firstURL.absoluteString
-            }
-        } 
-        // 2. Check for pure Image Data (Screenshots, copied web images)
-        else if let images = pb.readObjects(forClasses: [NSImage.self], options: nil) as? [NSImage], 
-                let rawImg = images.first {
-            
-            let img = rawImg.resizedToFit(maxWidth: 800)
-            if let tiff = img.tiffRepresentation,
-               let bitmap = NSBitmapImageRep(data: tiff),
-               let jpegData = bitmap.representation(using: .jpeg, properties: [.compressionFactor: 0.8]) {
+                if let jpegData = jpegData {
+                    ExtractedContent = "Screenshot"
+                    ExtractedMediaType = "image"
+                    ExtractedBinaryData = jpegData
+                } else {
+                    return
+                }
+            } 
+            // Also check for PNG data
+            else if let pngData = pb.data(forType: .png) {
+                guard let rawImg = NSImage(data: pngData) else { return }
                 
-                ExtractedContent = "Screenshot"
-                ExtractedMediaType = "image"
-                ExtractedBinaryData = jpegData
-            } else {
+                let img = rawImg.resizedToFit(maxWidth: 400)
+                if let tiff = img.tiffRepresentation,
+                   let bitmap = NSBitmapImageRep(data: tiff),
+                   let jpegData = bitmap.representation(using: .jpeg, properties: [.compressionFactor: 0.6]) {
+                    ExtractedContent = "Screenshot"
+                    ExtractedMediaType = "image"
+                    ExtractedBinaryData = jpegData
+                } else {
+                    return
+                }
+            } 
+            // 3. Fallback to standard String
+            else if let string = pb.string(forType: .string), !string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                ExtractedContent = string
+                ExtractedMediaType = "text"
+            } 
+            else {
+                // Unsupported or empty clipboard type
                 return
             }
-        } 
-        // 3. Fallback to standard String
-        else if let string = pb.string(forType: .string), !string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            ExtractedContent = string
-            ExtractedMediaType = "text"
-        } 
-        else {
-            // Unsupported or empty clipboard type
-            return
+            
+            // Already on main thread, save directly
+            self.lastChangeCount = newCount
+            self.saveProcessedItem(content: ExtractedContent, mediaType: ExtractedMediaType, binaryData: ExtractedBinaryData, fileURL: ExtractedFileURL)
         }
-        // Now switch back to the Main Thread for UI and SwiftData updates
-        DispatchQueue.main.async { [weak self, 
-                                    finalContent = ExtractedContent, 
-                                    finalMediaType = ExtractedMediaType, 
-                                    finalBinaryData = ExtractedBinaryData, 
-                                    finalFileURL = ExtractedFileURL] in
+    }
+    
+    func saveProcessedItem(content finalContent: String, mediaType finalMediaType: String, binaryData finalBinaryData: Data?, fileURL finalFileURL: String?) {
+        DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
-            // Advance the change count now that processing is secure
-            self.lastChangeCount = newCount
-            
-            // Don't add duplicates of the most recent item (based on content title, or raw string)
-            if let last = self.items.first, last.content == finalContent { return }
+            // Skip items that Pasty itself pasted (prevents re-ordering the list)
+            if self.selfPasteChangeCount == NSPasteboard.general.changeCount {
+                self.selfPasteChangeCount = -1
+                return
+            }
             
             let entry = ClipboardEntry(
                 content: finalContent, 
@@ -229,6 +286,12 @@ final class ClipboardHistory: @unchecked Sendable {
             if self.items.count > self.maxItems {
                 self.items = Array(self.items.prefix(self.maxItems))
             }
+            // Release thumbnail RAM for items beyond visible range
+            if self.items.count > 15 {
+                for i in 15..<self.items.count where self.items[i].binaryData != nil {
+                    self.items[i].binaryData = nil
+                }
+            }
             
             self.onChange?()
             self.logger.info("Clipboard captured: \(finalContent.prefix(40)) [\(finalMediaType)]")
@@ -240,13 +303,21 @@ final class ClipboardHistory: @unchecked Sendable {
             }
         
             // Check for duplicate in SwiftData too
-            let recentDescriptor = FetchDescriptor<PasteItem>(
+            var recentDescriptor = FetchDescriptor<PasteItem>(
                 sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
             )
-            if let recent = try? ctx.fetch(recentDescriptor).first,
-               recent.decryptedContent == finalContent {
-                self.logger.debug("Skipping SwiftData save — duplicate of most recent item")
-                return
+            recentDescriptor.fetchLimit = 1
+            if let recent = try? ctx.fetch(recentDescriptor).first {
+                if finalMediaType == "text" && recent.decryptedContent == finalContent {
+                    self.logger.debug("Skipping SwiftData save — duplicate of most recent item")
+                    return
+                } else if finalMediaType == "image" && recent.binaryData == finalBinaryData {
+                    self.logger.debug("Skipping SwiftData save — duplicate of most recent image")
+                    return
+                } else if finalMediaType == "file" && recent.fileURLString == finalFileURL {
+                    self.logger.debug("Skipping SwiftData save — duplicate of most recent file")
+                    return
+                }
             }
         
             // Check if encryption is enabled (Only encrypt text)
@@ -304,7 +375,147 @@ final class ClipboardHistory: @unchecked Sendable {
                 }
                 try? ctx.save()
             }
-        } // End of Main Thread Dispatch
+        }
+    }
+    
+    // MARK: - Recording Placeholder System
+    
+    /// Adds a placeholder entry for a screen recording that's still being saved by macOS.
+    /// Saved to SwiftData immediately with isPending=true so it appears in the view with a loading overlay.
+    func addPlaceholderRecording(id: UUID) {
+        guard let ctx = modelContext else {
+            logger.warning("No model context for placeholder")
+            return
+        }
+        
+        let pasteItem = PasteItem(
+            content: "Screen Recording (saving...)",
+            title: "Screen Recording (saving...)",
+            mediaType: "file"
+        )
+        pasteItem.id = id
+        pasteItem.isPending = true
+        
+        ctx.insert(pasteItem)
+        try? ctx.save()
+        onChange?()
+        logger.info("Added recording placeholder to SwiftData")
+    }
+    
+    /// Removes any stuck "Saving..." placeholder entries from previous sessions
+    func removeStuckPlaceholders() {
+        guard let ctx = modelContext else { return }
+        
+        let descriptor = FetchDescriptor<PasteItem>(
+            predicate: #Predicate { $0.isPending == true }
+        )
+        
+        guard let pending = try? ctx.fetch(descriptor), !pending.isEmpty else { return }
+        
+        for item in pending {
+            ctx.delete(item)
+        }
+        try? ctx.save()
+        
+        // Also remove from in-memory items
+        items.removeAll { $0.content.contains("(saving") }
+        
+        onChange?()
+        logger.info("Cleaned up \(pending.count) stuck placeholder(s)")
+    }
+    
+    /// Updates a placeholder entry with the real file data once the recording lands on Desktop.
+    func updatePlaceholderRecording(id: UUID, url: URL) {
+        guard let ctx = modelContext else {
+            processExternalScreenshot(url: url)
+            return
+        }
+        
+        // Find ANY pending placeholder (don't rely on UUID match alone)
+        let descriptor = FetchDescriptor<PasteItem>(
+            predicate: #Predicate { $0.isPending == true },
+            sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
+        )
+        
+        guard let pendingItem = try? ctx.fetch(descriptor).first else {
+            // No placeholder found — process as new
+            logger.warning("No pending placeholder found — adding as new entry")
+            processExternalScreenshot(url: url)
+            return
+        }
+        
+        // Generate thumbnail
+        let pathExt = url.pathExtension.lowercased()
+        var thumbData: Data? = nil
+        if ["mov", "mp4", "m4v"].contains(pathExt) {
+            thumbData = Self.generateVideoThumbnail(url: url)
+            Self.cacheVideoFile(from: url)
+        }
+        
+        // Update the placeholder with real data
+        pendingItem.content = url.lastPathComponent
+        pendingItem.title = url.lastPathComponent
+        pendingItem.binaryData = thumbData
+        pendingItem.fileURLString = url.absoluteString
+        pendingItem.isPending = false
+        
+        try? ctx.save()
+        
+        // Also update in-memory items array
+        let entry = ClipboardEntry(
+            content: url.lastPathComponent,
+            timestamp: Date(),
+            isImage: false,
+            binaryData: thumbData,
+            fileURL: url.absoluteString
+        )
+        // Replace the placeholder in items array if it exists
+        if let idx = items.firstIndex(where: { $0.content.contains("Screen Recording (saving") }) {
+            items[idx] = entry
+        }
+        
+        onChange?()
+        logger.info("Updated recording placeholder with real file: \(url.lastPathComponent)")
+    }
+    
+    func processExternalScreenshot(url: URL) {
+        let pathExt = url.pathExtension.lowercased()
+        let imageExtensions = ["png", "jpg", "jpeg", "tiff", "gif", "heic", "webp"]
+        let videoExtensions = ["mov", "mp4", "m4v", "avi", "mkv", "webm", "mpeg", "mpg"]
+        
+        var extractedContent = url.lastPathComponent
+        var extractedMediaType = "file"
+        var extractedBinaryData: Data? = nil
+        let extractedFileURL = url.absoluteString
+        
+        if imageExtensions.contains(pathExt), let rawImg = NSImage(contentsOf: url) {
+            let img = rawImg.resizedToFit(maxWidth: 800)
+            var jpegData: Data? = nil
+            
+            if let tiff = img.tiffRepresentation, let bitmap = NSBitmapImageRep(data: tiff) {
+                jpegData = bitmap.representation(using: .jpeg, properties: [.compressionFactor: 0.8])
+            } 
+            if jpegData == nil {
+                var rect = NSRect(origin: .zero, size: img.size)
+                if let cgImage = img.cgImage(forProposedRect: &rect, context: nil, hints: nil) {
+                    let newRep = NSBitmapImageRep(cgImage: cgImage)
+                    jpegData = newRep.representation(using: .jpeg, properties: [.compressionFactor: 0.8])
+                }
+            }
+            
+            if let jpegData = jpegData {
+                extractedContent = "Screenshot"
+                extractedMediaType = "image"
+                extractedBinaryData = jpegData
+            }
+        } else if videoExtensions.contains(pathExt) {
+            if let thumbData = Self.generateVideoThumbnail(url: url) {
+                extractedBinaryData = thumbData
+            }
+            Self.cacheVideoFile(from: url)
+        }
+        
+        self.saveProcessedItem(content: extractedContent, mediaType: extractedMediaType, binaryData: extractedBinaryData, fileURL: extractedFileURL)
     }
     
     func paste(_ entry: ClipboardEntry) {
@@ -338,6 +549,7 @@ final class ClipboardHistory: @unchecked Sendable {
         }
         
         lastChangeCount = NSPasteboard.general.changeCount
+        selfPasteChangeCount = NSPasteboard.general.changeCount
         triggerCmdV()
     }
     
@@ -416,7 +628,7 @@ final class ClipboardHistory: @unchecked Sendable {
     }
     
     /// Generate a JPEG thumbnail from a video file (single frame, RAM-light)
-    static func generateVideoThumbnail(url: URL, maxWidth: CGFloat = 400) -> Data? {
+    static func generateVideoThumbnail(url: URL, maxWidth: CGFloat = 300) -> Data? {
         let asset = AVAsset(url: url)
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
@@ -428,7 +640,7 @@ final class ClipboardHistory: @unchecked Sendable {
             
             guard let tiff = nsImage.tiffRepresentation,
                   let bitmap = NSBitmapImageRep(data: tiff),
-                  let jpegData = bitmap.representation(using: .jpeg, properties: [.compressionFactor: 0.7]) else {
+                  let jpegData = bitmap.representation(using: .jpeg, properties: [.compressionFactor: 0.5]) else {
                 return nil
             }
             return jpegData

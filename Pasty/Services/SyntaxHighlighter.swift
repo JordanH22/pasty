@@ -63,7 +63,11 @@ struct SyntaxHighlighter {
     }
     
     // NSCache is natively thread-safe, bypass Swift 6 strict checks
-    nonisolated(unsafe) private static let cache = NSCache<NSString, CacheWrapper>()
+    nonisolated(unsafe) private static let cache: NSCache<NSString, CacheWrapper> = {
+        let c = NSCache<NSString, CacheWrapper>()
+        c.countLimit = 20  // Cap cache to 20 entries to bound memory
+        return c
+    }()
     
     // MARK: - Core Highlight logic
     

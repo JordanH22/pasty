@@ -4,25 +4,30 @@ import SwiftData
 struct HistoryView: View {
     @Environment(AppState.self) private var appState
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \PasteItem.createdAt, order: .reverse) private var allPastes: [PasteItem]
+    @State private var allPastes: [PasteItem] = []
     @State private var searchText: String = ""
     @State private var hoveredPasteID: UUID?
     @State private var copiedPasteID: UUID?
     @State private var expandedPasteID: UUID?
     @State private var pinnedPasteIDs: Set<UUID> = []
     @State private var expandTask: Task<Void, Swift.Error>?
+    @State private var collapseTask: Task<Void, Never>?
     @State private var suppressHoverCollapse: Bool = false
-    @State private var previousPasteCount: Int = 0
-    @State private var refreshID: UUID = UUID()
+    @State private var cachedFilteredPastes: [PasteItem] = []
     
     private var filteredPastes: [PasteItem] {
+        cachedFilteredPastes
+    }
+    
+    private func recomputeFilteredPastes() {
         if searchText.isEmpty {
-            return Array(allPastes.prefix(appState.historyLimit))
+            cachedFilteredPastes = Array(allPastes.prefix(appState.historyLimit))
+        } else {
+            cachedFilteredPastes = allPastes.filter { paste in
+                paste.title.localizedCaseInsensitiveContains(searchText) ||
+                paste.decryptedContent.localizedCaseInsensitiveContains(searchText)
+            }.prefix(appState.historyLimit).map { $0 }
         }
-        return allPastes.filter { paste in
-            paste.title.localizedCaseInsensitiveContains(searchText) ||
-            paste.decryptedContent.localizedCaseInsensitiveContains(searchText)
-        }.prefix(appState.historyLimit).map { $0 }
     }
     
     var body: some View {
@@ -43,15 +48,12 @@ struct HistoryView: View {
             }
         }
         .onAppear {
-            // Wire live clipboard updates to trigger @Query refresh
+            fetchPastes()
             ClipboardHistory.shared.onChange = {
                 DispatchQueue.main.async {
-                    // Suppress hover-exit collapse during row shift
+                    self.fetchPastes()
                     self.suppressHoverCollapse = true
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                        self.refreshID = UUID()
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                         self.suppressHoverCollapse = false
                     }
                 }
@@ -59,6 +61,21 @@ struct HistoryView: View {
         }
         .onDisappear {
             ClipboardHistory.shared.onChange = nil
+            // Release fetched objects from RAM when leaving History tab
+            allPastes = []
+            cachedFilteredPastes = []
+        }
+        .onChange(of: searchText) { _, _ in
+            recomputeFilteredPastes()
+        }
+    }
+    
+    private func fetchPastes() {
+        var descriptor = FetchDescriptor<PasteItem>(sortBy: [SortDescriptor(\.createdAt, order: .reverse)])
+        descriptor.fetchLimit = appState.historyLimit + 10 // Slight buffer for filtering
+        if let fetched = try? modelContext.fetch(descriptor) {
+            allPastes = fetched
+            recomputeFilteredPastes()
         }
     }
     
@@ -121,6 +138,25 @@ struct HistoryView: View {
                                 }
                             }
                         )
+                        .overlay {
+                            if paste.isPending {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: Pasty.Radius.md, style: .continuous)
+                                        .fill(.ultraThinMaterial)
+                                    
+                                    HStack(spacing: Pasty.Spacing.sm) {
+                                        ProgressView()
+                                            .controlSize(.small)
+                                        Text("Saving Screen Recording...")
+                                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                                .transition(.opacity)
+                            }
+                        }
+                        .animation(.spring(response: 0.4, dampingFraction: 0.85), value: paste.isPending)
+                        .allowsHitTesting(!paste.isPending)
                         .id(paste.id)
                         .onHover { isHovering in
                             guard appState.popoverHoverEnabled,
@@ -134,19 +170,32 @@ struct HistoryView: View {
                             }
                             
                             expandTask?.cancel()
+                            collapseTask?.cancel()
                             if isHovering {
                                 expandTask = Task { @MainActor in
                                     try? await Task.sleep(for: .milliseconds(1000))
                                     guard !Task.isCancelled else { return }
+                                    // Suppress collapse briefly — the expansion shifts layout,
+                                    // which moves the row out from under the cursor triggering
+                                    // a false onHover(false) event
+                                    suppressHoverCollapse = true
                                     withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
                                         expandedPasteID = paste.id
                                     }
+                                    try? await Task.sleep(for: .milliseconds(600))
+                                    guard !Task.isCancelled else { return }
+                                    suppressHoverCollapse = false
                                 }
                             } else {
                                 // Don't collapse if pinned or in suppression window
                                 if !pinnedPasteIDs.contains(paste.id) && !suppressHoverCollapse {
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
-                                        expandedPasteID = nil
+                                    // Delay before collapsing — matches hotkey panel feel
+                                    collapseTask = Task { @MainActor in
+                                        try? await Task.sleep(for: .milliseconds(500))
+                                        guard !Task.isCancelled else { return }
+                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) {
+                                            expandedPasteID = nil
+                                        }
                                     }
                                 }
                             }
@@ -172,7 +221,7 @@ struct HistoryView: View {
                 }
                 .padding(.horizontal, Pasty.Spacing.lg)
                 .padding(.vertical, Pasty.Spacing.sm)
-                .id(refreshID) // Refresh list content; ScrollView scroll position preserved
+                // Identity managed by ForEach paste.id — no forced rebuild
             }
             .onChange(of: allPastes.count) { oldCount, newCount in
                 if newCount > oldCount {
@@ -199,17 +248,7 @@ struct HistoryView: View {
             .onChange(of: filteredPastes.count) { _, newCount in
                 appState.popoverItemCount = newCount
             }
-            .onChange(of: refreshID) { _, _ in
-                // After list refreshes with new entry, scroll to keep expanded row visible
-                // anchor: nil = minimum scroll needed (no scroll if already visible)
-                if let expandedID = expandedPasteID {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) {
-                            proxy.scrollTo(expandedID)
-                        }
-                    }
-                }
-            }
+
         }
     }
     
@@ -273,6 +312,7 @@ struct HistoryView: View {
         Button(role: .destructive) {
             withAnimation(Pasty.Motion.spring) {
                 modelContext.delete(paste)
+                fetchPastes()
             }
         } label: {
             Label("Delete", systemImage: "trash")

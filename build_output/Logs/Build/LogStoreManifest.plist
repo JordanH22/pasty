@@ -6,6 +6,48 @@
 	<integer>12</integer>
 	<key>logs</key>
 	<dict>
+		<key>3205D5DF-D2BC-41A2-A1DC-7DB7942BC043</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>3205D5DF-D2BC-41A2-A1DC-7DB7942BC043.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>56</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Pastry</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Pasty</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace Pastry with scheme Pasty and configuration Release</string>
+			<key>timeStartedRecording</key>
+			<real>796475229.47087896</real>
+			<key>timeStoppedRecording</key>
+			<real>796475256.22006798</real>
+			<key>title</key>
+			<string>Building workspace Pastry with scheme Pasty and configuration Release</string>
+			<key>uniqueIdentifier</key>
+			<string>3205D5DF-D2BC-41A2-A1DC-7DB7942BC043</string>
+		</dict>
 		<key>655DE566-4FCC-44B9-B929-90FA29CC43B5</key>
 		<dict>
 			<key>className</key>
