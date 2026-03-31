@@ -92,9 +92,9 @@ final class ClipboardPanelState {
 final class ClipboardPanelController {
     static let shared = ClipboardPanelController()
     
-    private var panel: KeyablePanel?
-    private var hostingController: NSHostingController<AnyView>?
-    private var previousApp: NSRunningApplication?
+    private nonisolated(unsafe) var panel: KeyablePanel?
+    private nonisolated(unsafe) var hostingController: NSHostingController<AnyView>?
+    private nonisolated(unsafe) var previousApp: NSRunningApplication?
     private var globalEventMonitor: Any?
     private var localMouseMonitor: Any?
     let state = ClipboardPanelState()
@@ -313,9 +313,9 @@ final class ClipboardPanelController {
         
         // Crucial: Pasty MUST explicitly yield key window status so target app's window can take it
         NSApp.deactivate() 
-        prevApp.activate(options: .activateIgnoringOtherApps)
+        prevApp.activate()
         
-        class RetryCounter { var count = 0 }
+        final class RetryCounter: @unchecked Sendable { var count = 0 }
         let counter = RetryCounter()
         
         Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] timer in
@@ -340,7 +340,7 @@ final class ClipboardPanelController {
     }
     
     /// Simulate Cmd+V keystroke via CGEvent (requires Accessibility permission only — no Automation needed)
-    private static func simulatePaste() {
+    private nonisolated static func simulatePaste() {
         // Verify Accessibility permission before attempting to post events
         guard AXIsProcessTrusted() else {
             print("simulatePaste: Accessibility NOT granted — prompting user")
@@ -384,7 +384,7 @@ final class ClipboardPanelController {
     }
     
     /// Fallback: AppleScript-based paste (needs Automation permission but works when CGEvent doesn't)
-    private static func simulatePasteViaAppleScript() {
+    private nonisolated static func simulatePasteViaAppleScript() {
         let script = NSAppleScript(source: """
             tell application "System Events"
                 keystroke "v" using command down

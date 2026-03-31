@@ -2,7 +2,7 @@ import SwiftUI
 
 
 @Observable
-final class AppState {
+final class AppState: @unchecked Sendable {
     // MARK: - UI State
     var selectedTab: PastyTab = .newPaste
     var isPopoverVisible: Bool = false
@@ -199,7 +199,7 @@ final class AppState {
             object: NSUbiquitousKeyValueStore.default,
             queue: .main
         ) { [weak self] notification in
-            guard let self else { return }
+            guard let _ = self else { return }
             guard let changedKeys = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String] else { return }
             let store = NSUbiquitousKeyValueStore.default
             for key in changedKeys where Self.syncableKeys.contains(key) {

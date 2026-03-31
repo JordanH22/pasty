@@ -111,7 +111,7 @@ struct ActivationView: View {
                         )
                         .shadow(color: isVerifying ? .blue.opacity(0.3) : .clear, radius: 10)
                         .offset(x: shakeOffset)
-                        .onChange(of: licenseKey) { newValue in
+                        .onChange(of: licenseKey) { _, newValue in
                             let lower = newValue.lowercased()
                             if lower.contains("crack") || lower.contains("bypass") || lower.contains("admin") {
                                 withAnimation(.spring()) { hackerMode = true }

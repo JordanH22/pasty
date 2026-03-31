@@ -1,25 +1,34 @@
 #!/bin/bash
 set -e
 
-echo "➡️ Creating Pasty.app container..."
-APP_DIR="Pasty.app"
+echo "➡️ Creating Pasty.app container in /tmp to bypass iCloud FileProvider locks..."
+rm -rf /tmp/Pasty_Build
+mkdir -p /tmp/Pasty_Build
+APP_DIR="/tmp/Pasty_Build/Pasty.app"
+
 rm -rf "$APP_DIR"
 mkdir -p "$APP_DIR/Contents/MacOS"
 mkdir -p "$APP_DIR/Contents/Resources"
+mkdir -p "$APP_DIR/Contents/Frameworks"
 
 echo "➡️ Copying executable (using ditto to strip metadata)..."
-ditto --norsrc build_output/Build/Products/Release/Pasty "$APP_DIR/Contents/MacOS/Pasty"
+ditto --norsrc --noextattr build_output/Build/Products/Release/Pasty "$APP_DIR/Contents/MacOS/Pasty"
 
 if [ -d "build_output/Build/Products/Release/Pasty_Pasty.bundle" ]; then
     echo "➡️ Copying SwiftPM bundle (using ditto)..."
-    ditto --norsrc build_output/Build/Products/Release/Pasty_Pasty.bundle "$APP_DIR/Contents/Resources/Pasty_Pasty.bundle"
+    ditto --norsrc --noextattr build_output/Build/Products/Release/Pasty_Pasty.bundle "$APP_DIR/Contents/Resources/Pasty_Pasty.bundle"
+    echo "➡️ Extracting Native Asset Catalog to Global Scope..."
+    cp build_output/Build/Products/Release/Pasty_Pasty.bundle/Contents/Resources/Assets.car "$APP_DIR/Contents/Resources/Assets.car" 2>/dev/null || true
 fi
+
+echo "➡️ Injecting Framework rpath..."
+install_name_tool -add_rpath @executable_path/../Frameworks "$APP_DIR/Contents/MacOS/Pasty" 2>/dev/null || true
 
 # Embed Sparkle.framework
 if [ -d "build_output/Build/Products/Release/Sparkle.framework" ]; then
     echo "➡️ Embedding Sparkle.framework..."
     mkdir -p "$APP_DIR/Contents/Frameworks"
-    ditto --norsrc build_output/Build/Products/Release/Sparkle.framework "$APP_DIR/Contents/Frameworks/Sparkle.framework"
+    ditto --norsrc --noextattr build_output/Build/Products/Release/Sparkle.framework "$APP_DIR/Contents/Frameworks/Sparkle.framework"
 fi
 
 # Link AppIcon payload explicitly
@@ -42,9 +51,9 @@ cat << 'PLIST' > "$APP_DIR/Contents/Info.plist"
     <key>CFBundleName</key>
     <string>Pasty</string>
     <key>CFBundleVersion</key>
-    <string>5</string>
+    <string>6</string>
     <key>CFBundleShortVersionString</key>
-    <string>3.2</string>
+    <string>3.3</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>LSUIElement</key>
@@ -56,6 +65,8 @@ cat << 'PLIST' > "$APP_DIR/Contents/Info.plist"
     </dict>
     <key>CFBundleIconFile</key>
     <string>AppIcon</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
     <key>NSAppleEventsUsageDescription</key>
     <string>Pasty uses accessibility to register global keyboard shortcuts and paste into other apps.</string>
     <key>SUFeedURL</key>
@@ -65,9 +76,12 @@ cat << 'PLIST' > "$APP_DIR/Contents/Info.plist"
 PLIST
 
 echo "➡️ Nuclear xattr strip (every file in the bundle)..."
-xattr -rc "$APP_DIR"
-# Double-check individual problem files
-find "$APP_DIR" -print0 | xargs -0 xattr -c 2>/dev/null
+find "$APP_DIR" -exec xattr -d com.apple.FinderInfo {} \; 2>/dev/null || true
+find "$APP_DIR" -exec xattr -d com.apple.ResourceFork {} \; 2>/dev/null || true
+find "$APP_DIR" -type l -exec xattr -d -s com.apple.FinderInfo {} \; 2>/dev/null || true
+xattr -d com.apple.FinderInfo "$APP_DIR" 2>/dev/null || true
+xattr -d com.apple.ResourceFork "$APP_DIR" 2>/dev/null || true
+dot_clean -n "$APP_DIR" || true
 
 echo "➡️ Verifying clean (no extended attributes)..."
 REMAINING=$(xattr -lr "$APP_DIR" 2>/dev/null | wc -l)
@@ -114,4 +128,6 @@ xattr -rc "$APP_DIR"
 # Sign outer app
 codesign --force --options runtime --timestamp --sign "$SIGN_ID" --entitlements "Pasty/Pasty.entitlements" "$APP_DIR"
 
-echo "➡️ Packaging complete. Pasty.app is ready."
+echo "➡️ Packaging complete. Pasty.app is ready in TMP."
+rm -rf Pasty.app
+cp -R "/tmp/Pasty_Build/Pasty.app" "Pasty.app"

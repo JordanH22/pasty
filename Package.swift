@@ -16,7 +16,10 @@ let package = Package(
                 .product(name: "Sparkle", package: "Sparkle")
             ],
             path: "Pasty",
-            exclude: ["Info.plist", "Pasty.entitlements"]
+            exclude: ["Info.plist", "Pasty.entitlements"],
+            swiftSettings: [
+                .swiftLanguageMode(.v5)
+            ]
         )
     ]
 )

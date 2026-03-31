@@ -57,8 +57,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var popover: NSPopover!
     var statusBarMenu: NSMenu!
     var onboardingWindow: NSWindow?
-    var popoverKeyMonitor: Any?
-    var popoverMouseMonitor: Any?
+    nonisolated(unsafe) var popoverKeyMonitor: Any?
+    nonisolated(unsafe) var popoverMouseMonitor: Any?
     let appState = AppState()
     
     let modelContainer: ModelContainer = {
@@ -113,9 +113,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         if let button = statusItem.button {
-            let icon = NSImage.pastyMenuBarIcon
-            icon.isTemplate = true
-            icon.accessibilityDescription = "Pasty"
+            let icon = Self.createPastyIcon()
             button.image = icon
             button.action = #selector(statusBarClicked(_:))
             button.target = self
@@ -311,7 +309,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             popoverKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
                 guard let self else { return event }
                 
-                let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+                _ = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
                 
                 // DON'T intercept Cmd+C/V/X/A here — the local monitor fires
                 // BEFORE the window's event dispatch, so SwiftUI's text selection
@@ -485,45 +483,75 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             }
         }
     }
-}
-
-// MARK: - Menu Bar Icon
-
-extension NSImage {
-    static var pastyMenuBarIcon: NSImage {
-        let size = NSSize(width: 18, height: 14)
-        let image = NSImage(size: size)
-        image.lockFocus()
+    
+    // MARK: - Menu Bar Icon (self-contained, no external resources)
+    
+    private static func createPastyIcon() -> NSImage {
+        let w = 18
+        let h = 18
         
-        guard let ctx = NSGraphicsContext.current?.cgContext else {
-            image.unlockFocus()
-            return image
+        // Create the final NSImage with both 1x and 2x reps
+        let image = NSImage(size: NSSize(width: w, height: h))
+        
+        for scale in [1, 2] {
+            let pw = w * scale
+            let ph = h * scale
+            
+            let colorSpace = CGColorSpaceCreateDeviceRGB()
+            guard let ctx = CGContext(
+                data: nil,
+                width: pw,
+                height: ph,
+                bitsPerComponent: 8,
+                bytesPerRow: pw * 4,
+                space: colorSpace,
+                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+            ) else { continue }
+            
+            // Clear background (fully transparent)
+            ctx.clear(CGRect(x: 0, y: 0, width: pw, height: ph))
+            
+            // Scale context to draw in point coordinates
+            let s = CGFloat(scale)
+            ctx.scaleBy(x: s, y: s)
+            
+            // Draw in black on transparent (template images: black = visible, clear = transparent)
+            ctx.setStrokeColor(red: 0, green: 0, blue: 0, alpha: 1)
+            ctx.setLineWidth(1.5)
+            ctx.setLineCap(.round)
+            ctx.setLineJoin(.round)
+            
+            // Main pasty body — semicircular arch
+            let bodyPath = CGMutablePath()
+            bodyPath.move(to: CGPoint(x: 2, y: 5))
+            bodyPath.addCurve(to: CGPoint(x: 16, y: 5),
+                              control1: CGPoint(x: 2, y: 14),
+                              control2: CGPoint(x: 16, y: 14))
+            bodyPath.closeSubpath()
+            ctx.addPath(bodyPath)
+            ctx.strokePath()
+            
+            // Crimped edge marks
+            ctx.setLineWidth(1.0)
+            let crimps: [(CGFloat, CGFloat)] = [
+                (3.0, 9.5), (5.5, 12.5), (9.0, 13.5), (12.5, 12.5), (15.0, 9.5)
+            ]
+            for c in crimps {
+                ctx.move(to: CGPoint(x: c.0, y: c.1))
+                ctx.addLine(to: CGPoint(x: c.0 + 1.0, y: c.1 + 1.0))
+            }
+            ctx.strokePath()
+            
+            // Extract immutable CGImage
+            guard let cgImage = ctx.makeImage() else { continue }
+            
+            let rep = NSBitmapImageRep(cgImage: cgImage)
+            rep.size = NSSize(width: w, height: h) // Points, not pixels
+            image.addRepresentation(rep)
         }
         
-        ctx.setStrokeColor(NSColor.black.cgColor)
-        ctx.setLineWidth(1.5)
-        ctx.setLineCap(.round)
-        ctx.setLineJoin(.round)
-        
-        // Main pasty body (semi-circle)
-        ctx.move(to: CGPoint(x: 2, y: 3))
-        ctx.addCurve(to: CGPoint(x: 16, y: 3), control1: CGPoint(x: 2, y: 12), control2: CGPoint(x: 16, y: 12))
-        ctx.closePath()
-        ctx.strokePath()
-        
-        // Crimped edge (little loops/bumps along the top)
-        ctx.setLineWidth(1.0)
-        let points: [(CGFloat, CGFloat)] = [
-            (3.0, 7.5), (5.5, 10.5), (9.0, 11.5), (12.5, 10.5), (15.0, 7.5)
-        ]
-        
-        for p in points {
-            ctx.move(to: CGPoint(x: p.0, y: p.1))
-            ctx.addLine(to: CGPoint(x: p.0 + 1.5, y: p.1 + 1.5))
-        }
-        ctx.strokePath()
-        
-        image.unlockFocus()
+        image.isTemplate = true
+        image.accessibilityDescription = "Pasty"
         return image
     }
 }

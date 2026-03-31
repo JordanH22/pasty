@@ -37,7 +37,7 @@ final class ClipboardHistory: @unchecked Sendable {
     
     private let logger = Logger(subsystem: "com.pasty.app", category: "clipboard-history")
     private var timer: Timer?
-    private var lastChangeCount: Int
+    private nonisolated(unsafe) var lastChangeCount: Int
     /// Tracks changeCount when Pasty itself pastes, so the monitor skips re-capturing it
     private var selfPasteChangeCount: Int = -1
     
@@ -128,10 +128,7 @@ final class ClipboardHistory: @unchecked Sendable {
             guard let self = self else { return }
             let currentCount = NSPasteboard.general.changeCount
             guard currentCount != self.lastChangeCount else { return }
-            
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                self?.processClipboardChange(newCount: currentCount)
-            }
+            self.processClipboardChange(newCount: currentCount)
         }
         RunLoop.main.add(t, forMode: .common)
         self.timer = t
@@ -144,7 +141,7 @@ final class ClipboardHistory: @unchecked Sendable {
     }
     
     // Background thread processing to avoid blocking 120Hz SwiftUI frames
-    private func processClipboardChange(newCount: Int) {
+    private nonisolated func processClipboardChange(newCount: Int) {
         // Read pasteboard on main thread to avoid crashes
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
