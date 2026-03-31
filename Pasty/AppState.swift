@@ -144,11 +144,71 @@ final class AppState {
             if Self.defaults.object(forKey: "accentColorHue") == nil { return 0.6 }
             return Self.defaults.double(forKey: "accentColorHue")
         }
-        set { Self.defaults.set(newValue, forKey: "accentColorHue") }
+        set {
+            Self.defaults.set(newValue, forKey: "accentColorHue")
+            syncToiCloud("accentColorHue", value: newValue)
+        }
     }
     
     var accentColor: Color {
         Color(hue: accentColorHue, saturation: 0.7, brightness: 0.9)
+    }
+    
+    // MARK: - iCloud Key-Value Sync
+    
+    var iCloudSyncEnabled: Bool {
+        get { Self.defaults.bool(forKey: "iCloudSyncEnabled") }
+        set {
+            Self.defaults.set(newValue, forKey: "iCloudSyncEnabled")
+            if newValue {
+                pushAllToiCloud()
+                startObservingiCloud()
+            }
+        }
+    }
+    
+    /// Keys that should sync across devices via iCloud
+    private static let syncableKeys = [
+        "accentColorHue", "secureHistory", "historyLimit",
+        "codeViewEnabled", "syntaxHighlighting", "showLineNumbers",
+        "showCopyLineButton", "plainTextByDefault", "autoCapture",
+        "globalHotkey", "hotkeyMenuWidth", "hotkeyMenuHeight",
+        "popoverWidth", "popoverHeight"
+    ]
+    
+    private func syncToiCloud(_ key: String, value: Any) {
+        guard Self.defaults.bool(forKey: "iCloudSyncEnabled") else { return }
+        NSUbiquitousKeyValueStore.default.set(value, forKey: key)
+        NSUbiquitousKeyValueStore.default.synchronize()
+    }
+    
+    private func pushAllToiCloud() {
+        let store = NSUbiquitousKeyValueStore.default
+        for key in Self.syncableKeys {
+            if let value = Self.defaults.object(forKey: key) {
+                store.set(value, forKey: key)
+            }
+        }
+        store.synchronize()
+    }
+    
+    func startObservingiCloud() {
+        guard Self.defaults.bool(forKey: "iCloudSyncEnabled") else { return }
+        NotificationCenter.default.addObserver(
+            forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+            object: NSUbiquitousKeyValueStore.default,
+            queue: .main
+        ) { [weak self] notification in
+            guard let self else { return }
+            guard let changedKeys = notification.userInfo?[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String] else { return }
+            let store = NSUbiquitousKeyValueStore.default
+            for key in changedKeys where Self.syncableKeys.contains(key) {
+                if let value = store.object(forKey: key) {
+                    Self.defaults.set(value, forKey: key)
+                }
+            }
+        }
+        NSUbiquitousKeyValueStore.default.synchronize()
     }
 }
 

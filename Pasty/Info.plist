@@ -41,5 +41,9 @@
     <!-- Supports Retina and ProMotion displays -->
     <key>NSSupportsAutomaticGraphicsSwitching</key>
     <true/>
+    
+    <!-- Sparkle auto-update feed URL -->
+    <key>SUFeedURL</key>
+    <string>https://pastyapp.github.io/pasty-distribution-repo/appcast.xml</string>
 </dict>
 </plist>

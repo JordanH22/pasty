@@ -6,9 +6,15 @@ let package = Package(
     platforms: [
         .macOS(.v15)
     ],
+    dependencies: [
+        .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.7.0")
+    ],
     targets: [
         .executableTarget(
             name: "Pasty",
+            dependencies: [
+                .product(name: "Sparkle", package: "Sparkle")
+            ],
             path: "Pasty",
             exclude: ["Info.plist", "Pasty.entitlements"]
         )

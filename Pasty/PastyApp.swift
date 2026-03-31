@@ -63,11 +63,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     let modelContainer: ModelContainer = {
         let schema = Schema([PasteItem.self])
-        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        
+        // Use a dedicated directory so we never collide with other SwiftData apps' default.store
+        let appSupportDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let pastyDir = appSupportDir.appendingPathComponent("Pasty", isDirectory: true)
+        try? FileManager.default.createDirectory(at: pastyDir, withIntermediateDirectories: true)
+        let storeURL = pastyDir.appendingPathComponent("PastyHistory.store")
+        
+        let config = ModelConfiguration(schema: schema, url: storeURL)
         do {
             return try ModelContainer(for: schema, configurations: [config])
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            // Self-healing: if the database is corrupt or schema-mismatched, nuke and recreate
+            let fm = FileManager.default
+            try? fm.removeItem(at: storeURL)
+            try? fm.removeItem(at: storeURL.appendingPathExtension("shm"))
+            try? fm.removeItem(at: storeURL.appendingPathExtension("wal"))
+            
+            do {
+                return try ModelContainer(for: schema, configurations: [config])
+            } catch {
+                fatalError("Could not create ModelContainer after recovery: \(error)")
+            }
         }
     }()
     

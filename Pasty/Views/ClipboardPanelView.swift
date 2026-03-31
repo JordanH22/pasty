@@ -347,6 +347,7 @@ struct ClipboardPanelView: View {
                                NSPasteboard.general.setString(item.content, forType: .string)
                            }
                            
+                           ClipboardHistory.shared.suppressNextChange()
                            ClipboardHistory.shared.bringToTop(item)
                            state.items = ClipboardHistory.shared.items
                            state.selectedIndex = 0

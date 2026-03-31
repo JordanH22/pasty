@@ -45,6 +45,13 @@ final class ClipboardHistory: @unchecked Sendable {
     var maxItems: Int = 50
     var onChange: (() -> Void)?
     
+    /// Call this when Pasty writes to the pasteboard itself (e.g. dismissAndPaste).
+    /// The monitor will skip the next clipboard change to avoid re-capturing our own paste.
+    func suppressNextChange() {
+        selfPasteChangeCount = NSPasteboard.general.changeCount
+        lastChangeCount = NSPasteboard.general.changeCount
+    }
+    
     var modelContext: ModelContext? {
         didSet {
             loadFromSwiftData()
@@ -542,7 +549,28 @@ final class ClipboardHistory: @unchecked Sendable {
             writeFileToPasteboard(fileURLStr)
         } 
         else if savedItem.mediaType == "image", let data = savedItem.binaryData, let nsImage = NSImage(data: data) {
-            NSPasteboard.general.writeObjects([nsImage])
+            // Write both raw image data (for apps like Messages/Slack) AND a temp file URL (for Finder)
+            let pb = NSPasteboard.general
+            
+            // 1. Write raw image so rich apps can use it
+            pb.writeObjects([nsImage])
+            
+            // 2. Also write a temp PNG file URL so Finder can paste it as a real file
+            let tempDir = FileManager.default.temporaryDirectory
+            let filename = "Pasty_Screenshot_\(Int(Date().timeIntervalSince1970)).png"
+            let tempURL = tempDir.appendingPathComponent(filename)
+            
+            if let tiff = nsImage.tiffRepresentation,
+               let bitmap = NSBitmapImageRep(data: tiff),
+               let pngData = bitmap.representation(using: .png, properties: [:]) {
+                try? pngData.write(to: tempURL)
+                
+                // Add file URL types alongside the image data already on the pasteboard
+                pb.addTypes([.fileURL], owner: nil)
+                pb.setString(tempURL.absoluteString, forType: .fileURL)
+                pb.addTypes([NSPasteboard.PasteboardType("NSFilenamesPboardType")], owner: nil)
+                pb.setPropertyList([tempURL.path], forType: NSPasteboard.PasteboardType("NSFilenamesPboardType"))
+            }
         } 
         else {
             NSPasteboard.general.setString(savedItem.decryptedContent, forType: .string)

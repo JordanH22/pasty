@@ -6,6 +6,10 @@ DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer /Applications/Xcod
 
 ./build_app.sh
 
+echo "➡️ Verifying code signature..."
+codesign -dv Pasty.app 2>&1 | grep -E "Authority|Identifier|Format|flags"
+echo "✅ Signed with Developer ID."
+
 echo "➡️ Creating DMG..."
 rm -f Pasty.dmg
 
@@ -23,4 +27,17 @@ rm -f Pasty.dmg
   "Pasty.dmg" \
   "Pasty.app/"
 
-echo "✅ DMG Creation complete!"
+echo "➡️ Signing DMG..."
+codesign --force --sign "Developer ID Application: Jordan Hill (286XQ7PY4A)" Pasty.dmg
+
+echo "➡️ Submitting to Apple for notarization..."
+xcrun notarytool submit Pasty.dmg \
+  --apple-id "jordanalxhill@outlook.com" \
+  --team-id "286XQ7PY4A" \
+  --keychain-profile "AC_PASSWORD" \
+  --wait
+
+echo "➡️ Stapling notarization ticket to DMG..."
+xcrun stapler staple Pasty.dmg
+
+echo "✅ DMG is signed, notarized, and stapled! Ready for distribution."

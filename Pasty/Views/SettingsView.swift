@@ -1,5 +1,6 @@
 import SwiftUI
 import ServiceManagement
+import Sparkle
 
 struct SettingsView: View {
     @Environment(AppState.self) private var appState
@@ -135,6 +136,18 @@ struct SettingsView: View {
             Toggle("Auto-capture clipboard on open", isOn: $state.autoCapture)
             Toggle("Plain text by default", isOn: $state.plainTextByDefault)
             launchAtLoginToggle
+            
+            Divider().opacity(0.15)
+            
+            // iCloud Sync toggle
+            Toggle(isOn: $state.iCloudSyncEnabled) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Sync settings across Macs")
+                    Text("Hotkey, encryption, appearance preferences sync via iCloud")
+                        .font(.system(size: 10))
+                        .foregroundStyle(.tertiary)
+                }
+            }
             
             Divider().opacity(0.15)
             
@@ -490,11 +503,26 @@ struct SettingsView: View {
     
     private var aboutContent: some View {
         VStack(alignment: .leading, spacing: Pasty.Spacing.sm) {
-            infoRow("Version", value: "1.0.0")
+            infoRow("Version", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "3.2")
+            infoRow("Build", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "5")
+            infoRow("Signed by", value: "Jordan Hill (286XQ7PY4A)")
             infoRow("Framework", value: "SwiftUI + SwiftData")
-            infoRow("Architecture", value: "Universal")
-            infoRow("RAM Target", value: "< 35 MB")
-            infoRow("Binary Target", value: "< 10 MB")
+            infoRow("Architecture", value: "Universal (arm64 + x86_64)")
+            
+            Divider().opacity(0.15)
+            
+            Button {
+                UpdaterManager.shared.checkForUpdates()
+            } label: {
+                HStack(spacing: Pasty.Spacing.sm) {
+                    Image(systemName: "arrow.triangle.2.circlepath")
+                        .font(.system(size: 12, weight: .semibold))
+                    Text("Check for Updates")
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, Pasty.Spacing.sm)
+            }
+            .buttonStyle(GlassButtonStyle(cornerRadius: Pasty.Radius.sm, isPrimary: true))
         }
     }
     

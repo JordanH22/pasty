@@ -289,6 +289,7 @@ struct HistoryView: View {
             Button {
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.setString(url, forType: .string)
+                ClipboardHistory.shared.suppressNextChange()
             } label: {
                 Label("Copy URL", systemImage: "link")
             }
@@ -303,6 +304,7 @@ struct HistoryView: View {
             } else {
                 NSPasteboard.general.setString(paste.decryptedContent, forType: .string)
             }
+            ClipboardHistory.shared.suppressNextChange()
         } label: {
             Label("Copy Content", systemImage: "doc.on.doc")
         }
@@ -332,6 +334,8 @@ struct HistoryView: View {
             let textToCopy = paste.remoteURL ?? paste.decryptedContent
             NSPasteboard.general.setString(textToCopy, forType: .string)
         }
+        
+        ClipboardHistory.shared.suppressNextChange()
         
         withAnimation(Pasty.Motion.spring) {
             copiedPasteID = paste.id

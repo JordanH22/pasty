@@ -2,19 +2,36 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- ⚠️ REMINDER: Re-enable sandbox when Apple Developer account is approved -->
+    <!-- App Sandbox OFF — required for CGEvent paste simulation and screenshot interception -->
     <key>com.apple.security.app-sandbox</key>
     <false/>
     
-    <!-- Outgoing network connections (for Lemon Squeezy license validation) -->
+    <!-- Hardened Runtime exceptions (required for notarization) -->
+    
+    <!-- Allow unsigned in-memory code execution (JIT for SwiftUI) -->
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+    
+    <!-- Allow DYLD environment variables (debug builds) -->
+    <key>com.apple.security.cs.allow-dyld-environment-variables</key>
+    <true/>
+    
+    <!-- Outgoing network connections (for Lemon Squeezy license validation + Sparkle updates) -->
     <key>com.apple.security.network.client</key>
     <true/>
     
-    <!-- Keychain access for API tokens and encryption keys -->
+    <!-- Accessibility API access (CGEvent posting for paste simulation) -->
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
+    
+    <!-- Keychain access for encryption keys -->
     <key>com.apple.security.keychain-access-groups</key>
     <array>
         <string>$(AppIdentifierPrefix)com.pasty.app</string>
     </array>
     
+    <!-- iCloud Key-Value Store for syncing settings across Macs -->
+    <key>com.apple.developer.ubiquity-kvstore-identifier</key>
+    <string>$(TeamIdentifierPrefix)com.jordan.pasty</string>
 </dict>
 </plist>

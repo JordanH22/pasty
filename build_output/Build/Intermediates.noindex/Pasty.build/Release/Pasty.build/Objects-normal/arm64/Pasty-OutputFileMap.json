@@ -78,6 +78,11 @@
     "llvm-bc" : "/Users/jordanhill/Desktop/Pastry/build_output/Build/Intermediates.noindex/Pasty.build/Release/Pasty.build/Objects-normal/arm64/SyntaxHighlighter.bc",
     "object" : "/Users/jordanhill/Desktop/Pastry/build_output/Build/Intermediates.noindex/Pasty.build/Release/Pasty.build/Objects-normal/arm64/SyntaxHighlighter.o"
   },
+  "/Users/jordanhill/Desktop/Pastry/Pasty/Services/UpdaterManager.swift" : {
+    "index-unit-output-path" : "/Pasty.build/Release/Pasty.build/Objects-normal/arm64/UpdaterManager.o",
+    "llvm-bc" : "/Users/jordanhill/Desktop/Pastry/build_output/Build/Intermediates.noindex/Pasty.build/Release/Pasty.build/Objects-normal/arm64/UpdaterManager.bc",
+    "object" : "/Users/jordanhill/Desktop/Pastry/build_output/Build/Intermediates.noindex/Pasty.build/Release/Pasty.build/Objects-normal/arm64/UpdaterManager.o"
+  },
   "/Users/jordanhill/Desktop/Pastry/Pasty/System/ClipboardPanelController.swift" : {
     "index-unit-output-path" : "/Pasty.build/Release/Pasty.build/Objects-normal/arm64/ClipboardPanelController.o",
     "llvm-bc" : "/Users/jordanhill/Desktop/Pastry/build_output/Build/Intermediates.noindex/Pasty.build/Release/Pasty.build/Objects-normal/arm64/ClipboardPanelController.bc",

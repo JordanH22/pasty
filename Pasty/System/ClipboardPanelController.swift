@@ -292,6 +292,9 @@ final class ClipboardPanelController {
             NSPasteboard.general.setString(item.content, forType: .string)
         }
         
+        // Tell the clipboard monitor to skip this change — we pasted it, not the user copying something new
+        ClipboardHistory.shared.suppressNextChange()
+        
         // 2. Visual feedback
         state.lastPastedId = item.id
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
