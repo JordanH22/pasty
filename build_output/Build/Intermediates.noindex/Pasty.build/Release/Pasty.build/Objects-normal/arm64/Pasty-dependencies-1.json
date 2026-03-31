@@ -266,546 +266,553 @@
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/AVFAudio.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/AVFAudio-5SDN63XGCERRUELLLON706NIK.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/AVFAudio-EUO844T9SQY0EP8IWWD5PJ1E0.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "AVFAudio"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/AVFoundation.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/AVFoundation-6H04ABNNI9LQ55Y33ZMQ7T9FU.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/AVFoundation-98KYF53Q2PBC1EG0M3326FXHA.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "AVFoundation"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/AVKit.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/AVKit-1SSSNIFZSH291SCH6FKBLOBNB.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/AVKit-CJLDL75BPN48OVHT4SRJ22ZV1.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "AVKit"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Accessibility.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Accessibility-ELE13REU36FZ3SB4RAEIVYM4W.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Accessibility-2RGD0KKB3F60ET8OIC75YU6Z.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Accessibility"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/AppKit.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/AppKit-2Y8O0SVMONZBVBJ56GIVUEIP7.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/AppKit-4OERTPF2L3HLG9LLNEGIJNHRB.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "AppKit"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/ApplicationServices.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ApplicationServices-5NFC6C9MQY69ARSLFD7SWSP2P.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ApplicationServices-ALW6E2Z6YH527YICQFEPEQ6TT.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "ApplicationServices"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/AudioToolbox.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/AudioToolbox-9ALXSXX6RCAEFK2AH2QYGNKJP.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/AudioToolbox-ASSBRE9WPIEONFH4QSNDALRRL.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "AudioToolbox"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CFNetwork.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CFNetwork-A5FWVQ453SHP0WM9CNEB6VWJL.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CFNetwork-EBWLNCMGJRQK9N2QEOT4DHT7Q.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CFNetwork"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/cups.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CUPS-AP1V76EXPE9MMNKR9L7NL0300.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CUPS-84LK5FJ1OIL6Y02TBPSRN1GS.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CUPS"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Carbon.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Carbon-9QUOGH7JHM2FMS3DNLEZYXI2K.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Carbon-E5N0QTZIUV3TGKY5DY6MCXGPZ.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Carbon"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Cocoa.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Cocoa-B2A57LQQFJREFI8BFQRWGA9VD.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Cocoa-EW6MWC3BBMLS2DJHG2O97DIVE.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Cocoa"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/ColorSync.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ColorSync-55LK3P2BIVAUTFX69IMGZQ1GB.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ColorSync-DIK78P76DZJLMJ7YCJ899GZHM.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "ColorSync"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreAudio.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreAudio-PM5Q9CH9OZ8SO97WB8H2CJJ3.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreAudio-TH0OR2SLU6E03J7TM0H8NN8A.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreAudio"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreAudioTypes.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreAudioTypes-11OP9KH2ZSQ53E2H92TI894OY.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreAudioTypes-MR9D139JI5KWLFE8R4M2Y3H5.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreAudioTypes"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreData.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreData-BRRBHTZEEBX2J98W0EOI5STOR.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreData-2GPFPAVM866X8XLPBVAFHH6V0.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreData"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreFoundation.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreFoundation-DVT6F06GGUA5UAR0ATNM7KXWD.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreFoundation-61H7CAD1C4L4V79COOUHP52CK.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreFoundation"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreGraphics.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreGraphics-CSFN6IBMYWGV2Z0R9L4405ZUD.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreGraphics-AMNUP7VTNRMJJMNP4FO0BHGRT.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreGraphics"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreImage.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreImage-8EN1J4OZE4VU5QP4O4DTZXZ9C.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreImage-C7RUWZCF44MG1Y74UP40MOFKH.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreImage"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreMIDI.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreMIDI-7OZTB8BU4EDIPD6CSWOYW9TH2.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreMIDI-7S7DC53U84GWUDNAY6BOKDBJ4.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreMIDI"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreMedia.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreMedia-BJ9SN8DZ3ID2C0BC960UCURU1.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreMedia-DOC56BBETUHUY0Q4IPGG2HUFQ.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreMedia"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreServices.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreServices-1Y3AN4NLA46RHMBTHHINQOV0H.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreServices-3C18URRN0WRG087GFA4N15DQW.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreServices"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreText.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreText-4OI3MXZP4YDAIC36H9OSDTHUH.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreText-DRGSHMNQU97AIEKMGAE9PQJZO.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreText"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreTransferable.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreTransferable-D7KSNT2QVH29H5H1TQFOOB31B.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreTransferable-FURX453L1XG1R8PF9P0RT6MN.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreTransferable"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreVideo.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreVideo-ECH25ET8L1Q7RYRZIAELZAGE7.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/CoreVideo-24FIIOBKK3FY4XNWIF4FZTWYT.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "CoreVideo"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/Darwin.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Darwin-9V1IF1THFNRBD1XOAU4BUT92A.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Darwin-5A40FYGUSE905EPAKNGEBHOI.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Darwin"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/DataDetection.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/DataDetection-6RMXMRILLGL4LDOENU35WEIXF.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/DataDetection-BIAQXNHV0LTB0OZQR64SDZL5D.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "DataDetection"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/DeveloperToolsSupport.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/DeveloperToolsSupport-482M67RBCQ8BRTZKVX95CTPOP.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/DeveloperToolsSupport-B864UTKLB78TJKJ9IKN1G8B6P.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "DeveloperToolsSupport"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/DiskArbitration.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/DiskArbitration-C53YKF7XC7H9E14KY068CA91.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/DiskArbitration-F1GI1AVZKXRA5ET2G3CQRIJ8I.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "DiskArbitration"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/dispatch.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Dispatch-EYYVU118UMOZIRHMIUDDZWDU4.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Dispatch-EEEZC4OIY0XRKB9IZ7U8460JK.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Dispatch"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Foundation.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Foundation-35FPS87OR5MAV481ADU8WGY53.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Foundation-8QKKWPENUUB6S9ROFIVRZH6LZ.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Foundation"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/IOKit.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/IOKit-68H9GKF0CIY1IB60OD5N1EVET.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/IOKit-6BBP0UYCQFVY3U1GOTDS1H0AE.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "IOKit"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/IOSurface.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/IOSurface-1T2GJAT0I6YBSNT9E4SOU813X.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/IOSurface-DOKMYY9FBZONOTYRG4B8TQSZD.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "IOSurface"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/ImageIO.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ImageIO-U3U09J0KOBMVZI473QHY2I3P.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ImageIO-D8JZZQ0HYF2D5F6H0WXTODG70.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "ImageIO"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/LocalAuthentication.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/LocalAuthentication-6EO3VFWBQ8URWR01AGQYMQDTB.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/LocalAuthentication-EU53WFCW9211PD3L0UHVXNFCP.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "LocalAuthentication"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinBasic.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/MachO-20SLQPV53DTHQEEE2XAHPKXNP.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/MachO-EEB7NVDZ5RZ4PZ338OVNS2VGR.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "MachO"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/MediaAccessibility.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/MediaAccessibility-94NRBHUA83K5IPMQDDA6RY0DF.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/MediaAccessibility-6G703PI634UATJ48BA12VHPZW.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "MediaAccessibility"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/MediaToolbox.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/MediaToolbox-C31M3LKASMALO6JZGF4U6LCMK.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/MediaToolbox-AQ941TJ0X9EXSJCMAN8SEHMT6.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "MediaToolbox"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Metal.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Metal-A7XUVQZ1Y44VBK703OGEKKQKT.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Metal-69V29WDI69ZEWI2BVGOPOYXZJ.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Metal"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Network.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Network-D3GJ9MUOXOBN0R7IKY51XIWUP.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Network-B45R17RRGXW31CEME10BE1ZOG.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Network"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/OSLog.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/OSLog-9BP5RRGE3Q6N7YIRFRW099IPD.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/OSLog-94IYC12SBS2RUOJWX5FBEGH6Y.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "OSLog"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/ObjectiveC.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ObjectiveC-BQMWS9DH1SYZA6SRJW3ACFUWO.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ObjectiveC-A47KV1L8CM0JBK6D4G3SR97Y2.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "ObjectiveC"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/OpenGL.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/OpenGL-9BEXAQP9JNHMARTWMB5JG47RU.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/OpenGL-4A4BETJ0S7DX5CSH595372DUK.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "OpenGL"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/QuartzCore.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/QuartzCore-EHOU40KVKO2AJXSGKWKSPICT2.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/QuartzCore-3NBTAJZ8MLRER4EJ2F0JEM59H.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "QuartzCore"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Security.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Security-ABTMHTUI5B3L5TYX6AXR0BRL7.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Security-96SJ38XY5N9MTJFZQ6AAR0N02.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Security"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/ServiceManagement.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ServiceManagement-5VON3CDLT8001ELKKX2H0QPE7.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ServiceManagement-1UU2H4ZPP6D2M0XM73SP64QBW.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "ServiceManagement"
   },
   {
+    "clangModuleMapPath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/Build\/Products\/Release\/Sparkle.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/Sparkle-CAVJF8IJFEXT1K07HR4RSZH0.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Sparkle"
+  },
+  {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/Spatial\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Spatial-C6VBH1E0JG0G7GFTCQ3L5IHI5.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Spatial-7U1EFBDN7WQ8POQWCXBYY6UNY.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Spatial"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/lib\/swift\/shims\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/SwiftShims-CA72H0J8E4ZHJ53PG7HXZDFN1.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/SwiftShims-CW94UGSVCKFB2M4M4MMWRI8SK.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "SwiftShims"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/SwiftUI.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/SwiftUI-2RYMIZBRBR2EJR2XA9A3X0CAL.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/SwiftUI-3LC07CLCU3AL3SCJXLBEGFW9T.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "SwiftUI"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/SwiftUICore.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/SwiftUICore-3BXODELJ3JPNZH37EF4NJLV2L.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/SwiftUICore-2GEBZ6UJL6XK9VGX9SF0LOKC8.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "SwiftUICore"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Symbols.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Symbols-F0NIUXHOL5MXQVMS0FD7R2VSY.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/Symbols-3I5KCDX9VSTXRLKWH0JKWOERB.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "Symbols"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/UniformTypeIdentifiers.framework\/Modules\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/UniformTypeIdentifiers-3VMJTYI1N46V9TMDOLRU4CE8T.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/UniformTypeIdentifiers-3V7UZGADHJAZQK9TNB6O7ZAKT.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "UniformTypeIdentifiers"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/xpc.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/XPC-ET8F73Q947NE35YTYNTJU4G8H.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/XPC-45O42QDL9AI18Q7BQZAFY662F.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "XPC"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation1.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_AvailabilityInternal-9JZ806LEJENQ8DC5AHTK9F82H.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_AvailabilityInternal-CY87C7JZLCKNG1HZB3QVI49B6.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_AvailabilityInternal"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_float-6006BNTESAMKQ85R2OI24KVJL.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_float-HC7BPWX9PB53BN7EGUBCRRJJ.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_Builtin_float"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_intrinsics-847UN094K6WM5ZGUTGDVX9JY6.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_intrinsics-39OP2BKTJNF6X3EV7X2LJQSUE.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_Builtin_intrinsics"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_inttypes-5KBIESFUUEYPNUQS4MTZ0BTZQ.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_inttypes-AOWY5BORKSOKWVZ45JRMTGTBN.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_Builtin_inttypes"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_limits-B5830K2B83KIPDJS69CDSIWC7.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_limits-5AFWKR8LWD4H46F2U7FNGHM5F.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_Builtin_limits"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_stdarg-B5F9FZ6TY8ET2BMFEKRLIJY21.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_stdarg-E2CVJPQEURJU64ZBWJ5YMVGCU.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_Builtin_stdarg"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_stdatomic-D7KXP5U4RTHHW5YTGJ54OJL9H.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_stdatomic-63ZWKSA9Y480OLH3D9B7HAYS0.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_Builtin_stdatomic"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_stdbool-7R70CAELE576M3M6S1440DU7J.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_stdbool-9GP5XQ8L0PPOFLKT0X4ZWHCI4.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_Builtin_stdbool"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_stddef-F8OPIOUCKQENHD5H6V5XQ6IY.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_stddef-EMW48U0H11LG1NGZXTSDS4991.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_Builtin_stddef"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_stdint-EQECINX04Q095GTYUQNMEM5LU.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_stdint-9NEJKPCGV8INWUANU3P2ATYHZ.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_Builtin_stdint"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_tgmath-68S355853OGFGGQ4Y8U6HYH3K.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_Builtin_tgmath-9FFLJHHDZKXFY1JKD6K9POPDA.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_Builtin_tgmath"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation1.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_DarwinFoundation1-4Z28JQDZCV0TCLKD65908XGX8.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_DarwinFoundation1-A5TE84QD5XW18NORX9HNTJXN2.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_DarwinFoundation1"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation2.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_DarwinFoundation2-8JFC0FNMGXJP9BMSI3BECJ4QW.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_DarwinFoundation2-1G0R5FOXQY0GNZKBPE66KREPI.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_DarwinFoundation2"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation3.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_DarwinFoundation3-7G31N7H4FQP6F67ZORHYA57GR.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_DarwinFoundation3-WLI4FRRQLYMNIOO0HWAS6V76.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_DarwinFoundation3"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/lib\/swift\/shims\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_SwiftConcurrencyShims-6ROGDBT3OU1R6MX95R2VJ6LWA.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/_SwiftConcurrencyShims-52NMOBUR9UGM2CQMP2JUD37ZT.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "_SwiftConcurrencyShims"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/dnssd.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/dnssd-4N9C8W9TEIISUYLFUFYCSR0E5.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/dnssd-8P5ZQ0Y0QN9O7B8MSNLGRWMUW.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "dnssd"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/launch.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/launch-B5I7QKLPAC2UUSQ0PX6HZR2W9.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/launch-5EED46QHQ6UBYSY1K93659B4U.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "launch"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/libDER\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/libDER-6K4NKJ3LOCGT28N4WE36JTS4A.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/libDER-3R3M82L5R3R7KOLQYQ37Z6TR4.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "libDER"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/libkern.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/libkern-8KE44Q87MNY3CLL7OWKU58XA3.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/libkern-6CL2NEP97HKMOJJW8O2APFFJ0.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "libkern"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/os.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/os-9N35NI5W7PZBOMZK31RCGMSK0.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/os-2VPR95FZY6HFDPSGLWDRMBCRU.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "os"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/os.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/os_object-1Z510IIFUQGV1AZ3Z4IJH7NFS.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/os_object-5PMNIA8FRIVKQLBWI98JSM9A0.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "os_object"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/os.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/os_workgroup-AGTL0B5ATLSJ60611ULBPTM6G.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/os_workgroup-COVOZJZWQGMYS5LFQWBJWDAQB.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "os_workgroup"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ptrauth-D09TQII1XKTOXPGT4AKFAKJWF.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ptrauth-EYO26O3E21J1GA4UJGG09YQV2.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "ptrauth"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ptrcheck-B51RH0H2N6495UXCGEPKC4E4K.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/ptrcheck-4LQ7Y03TZTURCYVPOIQW56IFL.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "ptrcheck"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/simd\/module.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/simd-BKLX5JFB1L02A6QS23Z4O5VUR.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/simd-6UBWXSS5Z72K4353LO1KSPECW.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "simd"
   },
   {
     "clangModuleMapPath" : "\/Applications\/Xcode-beta.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation2.modulemap",
-    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/sys_types-EHHSYLC502KGERWKG8OM0TGKL.pcm",
+    "clangModulePath" : "\/Users\/jordanhill\/Desktop\/Pastry\/build_output\/ModuleCache.noindex\/sys_types-BKJYE4S1KKJ69HWAAB6D7OLZA.pcm",
     "isBridgingHeaderDependency" : false,
     "isFramework" : false,
     "moduleName" : "sys_types"

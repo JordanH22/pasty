@@ -89,11 +89,9 @@ struct OnboardingView: View {
                 .padding(.horizontal, Pasty.Spacing.md)
                 .padding(.bottom, Pasty.Spacing.md)
             } // ScrollView
-            .onScrollGeometryChange(for: CGFloat.self) { geo in
-                geo.contentOffset.y
-            } action: { _, newOffset in
-                if newOffset > 20 && !hasScrolled {
-                    withAnimation(.easeOut(duration: 0.3)) {
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                    withAnimation(.easeOut(duration: 0.5)) {
                         hasScrolled = true
                     }
                 }
@@ -539,7 +537,7 @@ struct OnboardingView: View {
                     }
                     .pickerStyle(.menu)
                     .frame(width: 140)
-                    .onChange(of: globalHotkey) { _ in
+                    .onChange(of: globalHotkey) {
                         HotkeyManager.shared.reload()
                     }
                     

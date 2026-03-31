@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "Pasty",
     platforms: [
-        .macOS(.v15)
+        .macOS(.v14)
     ],
     dependencies: [
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.7.0")

@@ -423,7 +423,7 @@ struct SettingsView: View {
                 }
                 .pickerStyle(.menu)
                 .frame(width: 140)
-                .onChange(of: globalHotkey) { _ in
+                .onChange(of: globalHotkey) {
                     HotkeyManager.shared.reload()
                 }
             }
